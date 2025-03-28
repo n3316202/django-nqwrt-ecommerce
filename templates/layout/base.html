@@ -1,9 +1,9 @@
 {% load static %}
-{% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
     {% block head %}{% endblock %}
     <body>
+        {% block navi %}{% endblock %}
         {% block header %}{% endblock %}
         <!-- 기본 템플릿 안에 삽입될 내용 Start -->
         {% block content %}{% endblock %}
