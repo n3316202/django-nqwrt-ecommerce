@@ -46,12 +46,8 @@
                             </div>
                             <!-- 이메일 확인 -->
                             <div class="mb-3">
-                                <label for="email">이메일</label>
-                                <input type="text"
-                                       class="form-label"
-                                       name="email"
-                                       id="email"
-                                       value="{{ form.email.value|default_if_none:'' }}">
+                                <label for="id_email" class="form-label" name="email" id="email">이메일</label>
+                                {{ form.email }}
                             </div>
                             <!-- 직업 선택 -->
                             <div class="mb-3">
