@@ -4,9 +4,9 @@
 {% block head %}
     {% include "accounts/head.html" %}
 {% endblock head %}
-<div class="d-flex flex-column vh-100 justify-content-between">
-    {% block navi %}
-        {% include "layout/nav.html" %}
+{% block navi %}
+    <div class="d-flex flex-column vh-100 justify-content-between">
+        {% include "layout/navbar.html" %}
     {% endblock navi %}
     <!--템플릿 적용-->
     {% block content %}
@@ -16,7 +16,9 @@
                      alt="">
             </div>
             <div class="text-center mt-4 name">Login</div>
-            <form class="p-3 mt-3" method="post" action="{% url 'accounts:login' %}">
+            <form class="p-3 mt-3"
+                  method="post"
+                  action="{% url 'accounts:login_user' %}">
                 {% csrf_token %}
                 <input type="hidden" name="next" value="{{ next }}">
                 <!-- 로그인 성공후 이동되는 URL -->
