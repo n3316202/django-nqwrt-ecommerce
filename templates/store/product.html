@@ -36,9 +36,13 @@
                      type="num"
                      value="1"
                      style="max-width: 3rem">
-              <button class="btn btn-outline-dark flex-shrink-0" type="button">
+              <button class="btn btn-outline-dark flex-shrink-0"
+                      type="button"
+                      id="add-cart">
+                <!--dev_15-->
                 <i class="bi-cart-fill me-1"></i>
-                Add to cart
+                <!--dev_15-->
+                Add to cart(장바구니 담기)
               </button>
             </div>
             <br>
@@ -52,3 +56,27 @@
     {% include "layout/footer.html" %}
   {% endblock footer %}
 </div>
+{% block script %}
+  <script>
+$(document).on('click', '#add-cart',function(e){
+  $.ajax({
+    type:"POST",
+    url:"{% url 'cart:cart_add' %}",
+    data:{
+      product_id: $('#add-cart').val(),
+      //product_qty: $('#qty-cart option:selected').text(),
+      product_qty: $('#inputQuantity').val(),
+      csrfmiddlewaretoken:'{{  csrf_token }}',
+      action: 'post'
+    },
+    success : function(json){
+      console.log(json)
+      $('#cart_quantity').text(json.qty)
+    },
+    error : function(e){
+      console.log(e)
+    }
+  })
+});
+  </script>
+{% endblock script %}
