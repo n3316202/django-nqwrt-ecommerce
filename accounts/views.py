@@ -57,11 +57,7 @@ def register_user(request):
                 )  # 사용자 인증
                 login(request, user)  # 로그인
 
-            return redirect("/")
-        else:
-            pass
-
-        return render(request, "register.html")
+                return redirect("/")
     else:
         form = RegisterUserForm()
 
