@@ -38,6 +38,7 @@
                      style="max-width: 3rem">
               <button class="btn btn-outline-dark flex-shrink-0"
                       type="button"
+                      value="{{ product.id }}"
                       id="add-cart">
                 <!--dev_15-->
                 <i class="bi-cart-fill me-1"></i>
@@ -56,9 +57,10 @@
     {% include "layout/footer.html" %}
   {% endblock footer %}
 </div>
+<!--dev_15-->
 {% block script %}
   <script>
-$(document).on('click', '#add-cart',function(e){
+  $(document).on('click', '#add-cart',function(e){
   $.ajax({
     type:"POST",
     url:"{% url 'cart:cart_add' %}",
