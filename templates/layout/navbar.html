@@ -26,11 +26,11 @@
                         <!--dev_9-->
                         <li class="nav-item">
                               {% if user.is_authenticated %}
-                                    <a class="nav-link" href="{% url 'accounts:logout' %}">{{ user.username }} (로그아웃)</a>
+                                    <a class="nav-link" href="{% url 'accounts:logout_user' %}">{{ user.username }} (로그아웃)</a>
                               {% else %}
                                     <a class="nav-link active"
                                        aria-current="page"
-                                       href="{% url 'accounts:login' %}">로그인</a>
+                                       href="{% url 'accounts:login_user' %}">로그인</a>
                               {% endif %}
                         </li>
                         <li class="nav-item dropdown">
