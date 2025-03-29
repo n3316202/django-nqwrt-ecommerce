@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
-# dev_8
+# dev_9
 # Create your models here.
 class User(AbstractUser):
     class GenderChoices(models.TextChoices):
