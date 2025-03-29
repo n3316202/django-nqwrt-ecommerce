@@ -39,10 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "store",  # dev_1
     "django.contrib.humanize",  # dev_5
-<<<<<<< HEAD
     "accounts",  # dev_9
-=======
->>>>>>> dev_8_About_페이지_작성_2024-03-29
 ]
 
 MIDDLEWARE = [
