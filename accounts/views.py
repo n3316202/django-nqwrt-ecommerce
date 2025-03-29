@@ -33,7 +33,10 @@ def login_user(request):
         return render(request, "accounts/login.html", {})
 
 
+# dev_11
 def register_user(request):
+
+    print("회원가입")
 
     if request.method == "POST":
 
