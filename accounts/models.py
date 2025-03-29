@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser
 # dev_9
 # Create your models here.
 class User(AbstractUser):
+
     class GenderChoices(models.TextChoices):
         MALE = "M", "남성"
         FEMALE = "F", "여성"

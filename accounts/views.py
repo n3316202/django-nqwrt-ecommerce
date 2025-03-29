@@ -39,18 +39,28 @@ def register_user(request):
     if request.method == "POST":
 
         if request.POST["password1"] == request.POST["password2"]:
-            user = User.objects.create_user(
-                username=request.POST["username"],
-                password=request.POST["password1"],
-                email=request.POST["email"],
-            )
-            login(request, user)
+
+            form = RegisterUserForm(request.POST)
+
+            if form.is_valid():
+                form.save()  # DB 저장
+
+                # 회원가입 하자 마자,  로그인을 시켜줌
+                username = form.cleaned_data.get(
+                    "username"
+                )  # request.POST.get("username",'')
+                raw_password = form.cleaned_data.get("password1")
+                user = authenticate(
+                    username=username, password=raw_password
+                )  # 사용자 인증
+                login(request, user)  # 로그인
+
             return redirect("/")
         else:
             pass
 
         return render(request, "register.html")
     else:
-        context = {"form": form}
+        form = RegisterUserForm()
 
-    return render(request, "accounts/register.html", context)
+    return render(request, "accounts/register.html", {"form": form})
