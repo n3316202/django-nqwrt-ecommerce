@@ -34,7 +34,6 @@ def login_user(request):
 
 
 def register_user(request):
-    form = RegisterUserForm()
 
     if request.method == "POST":
 
