@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from accounts import views
 
-# dev_8
+# dev_9
 app_name = "accounts"
 
 urlpatterns = [
