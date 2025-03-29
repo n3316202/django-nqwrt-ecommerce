@@ -47,18 +47,23 @@
                                  data-bs-toggle="dropdown"
                                  aria-expanded="false">Shop</a>
                               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    {% comment %} dev_14 {% endcomment %}
                                     <li>
-                                          <a class="dropdown-item" href="#!">All Products</a>
+                                          <a class="dropdown-item" href="{% url 'store:category_summary' %}">카테고리들</a>
                                     </li>
                                     <li>
                                           <hr class="dropdown-divider" />
                                     </li>
-                                    <li>
-                                          <a class="dropdown-item" href="#!">Popular Items</a>
-                                    </li>
-                                    <li>
-                                          <a class="dropdown-item" href="#!">New Arrivals</a>
-                                    </li>
+                                    {% comment %} dev_14 {% endcomment %}
+                                    {% comment %} 카테고리 받아오기위한 추가 부분 {% endcomment %}
+                                    {% if categories %}
+                                          {% for category in categories %}
+                                                <li>
+                                                      <a class="dropdown-item"
+                                                         href="{% url 'store:category'  category.name %}">{{ category.name }}</a>
+                                                </li>
+                                          {% endfor %}
+                                    {% endif %}
                               </ul>
                         </li>
                   </ul>
