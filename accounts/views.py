@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 
 
-# dev_8
+# dev_9
 # Create your views here.
 def logout_user(request):
     logout(request)
