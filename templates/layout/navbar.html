@@ -81,3 +81,16 @@
             </div>
       </div>
 </nav>
+<!--dev_22-->
+{% if messages %}
+      {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                  <strong>메세지</strong>
+                  {{ message }}
+                  <button type="button"
+                          class="btn-close"
+                          data-bs-dismiss="alert"
+                          aria-label="Close"></button>
+            </div>
+      {% endfor %}
+{% endif %}

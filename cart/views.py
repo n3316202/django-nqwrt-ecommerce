@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, render
 from django.shortcuts import render
 from store.models import Product
 from cart.cart import Cart
+from django.contrib import messages
 
 
 # dev_15
@@ -30,6 +31,9 @@ def cart_add(request):
         # Get Cart Quantity
         cart_quantity = cart.__len__()
         response = JsonResponse({"qty": cart_quantity})
+
+        # 추가 dev_22
+        messages.success(request, "장바구니에 해당 상품이 추가되었습니다.")
         return response
 
 
@@ -59,6 +63,8 @@ def cart_delete(request):
         cart.remove(product)
 
         response = JsonResponse({"product": product_id})
+        # dev_22
+        messages.success(request, "장바구니에서 해당 상품이 삭제되었습니다.")
         return response
 
 
@@ -78,4 +84,6 @@ def cart_update(request):
         cart.add(product, quantity, True)
 
         response = JsonResponse({"product": product_id})
+        # 추가 dev_22
+        messages.success(request, "장바구니가 업데이트 되었습니다.")
         return response
