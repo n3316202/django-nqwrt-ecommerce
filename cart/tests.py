@@ -50,3 +50,31 @@ class SessionTest(TestCase):
 
         # 출력
         print("✅ 복호화된 세션 데이터:", session_dict)
+
+    # def test_session_crud(self):
+    #     """세션 생성, 조회, 수정, 삭제 테스트"""
+
+    #     # 1️⃣ **세션 생성 (Create)**
+    #     session = SessionStore()
+    #     session["cart"] = {"1": {"quantity": 2, "price": "25000.00"}}
+    #     session.create()  # 세션 저장 (DB에 새로운 세션 생성)
+    #     session_key = session.session_key  # 생성된 세션 키 가져오기
+    #     print(f"✅ 생성된 세션 키: {session_key}")
+
+    #     # 2️⃣ **세션 조회 (Read)**
+    #     session_from_db = SessionStore(session_key=session_key)
+    #     session_data = session_from_db.load()
+    #     print(f"🔍 조회된 세션 데이터: {session_data}")
+
+    #     # 3️⃣ **세션 수정 (Update)**
+    #     session_from_db["cart"]["1"]["quantity"] = 3  # 수량 변경
+    #     session_from_db.save()
+    #     updated_session_data = SessionStore(session_key=session_key).load()
+    #     print(f"✏️ 수정된 세션 데이터: {updated_session_data}")
+
+    #     # 4️⃣ **세션 삭제 (Delete)**
+    #     Session.objects.get(session_key=session_key).delete()
+    #     try:
+    #         deleted_session = SessionStore(session_key=session_key).load()
+    #     except Exception as e:
+    #         print(f"❌ 세션 삭제 확인: {e}")  # 세션이 삭제되었으면 오류 발생
