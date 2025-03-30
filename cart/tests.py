@@ -37,19 +37,37 @@ class SessionTest(TestCase):
     def test_encode_session(self):
         import base64
         import json
+        import zlib
 
         # DB에서 가져온 session_data (서명 포함)
-        raw_session_data = "eyJjYXJ0Ijp7IjEiOnsicXVhbnRpdHkiOjEsInByaWNlIjoiMjQwMDAuMDAifX19:1tyjmA:tzt1C0yh9PPEgMvt93p4lKap_MGAAQvYNwYssETAcYo"
+        raw_session_data = ".eJyrVkpOLCpRsqpWMgQRhaWJeSWZJZVKVoaGJjpKBUWZyalKVkpGJgYGBnoGBkq1OkrGaOrMLLCrM0JTZ2CAUGdoBFNXWwsAlzkksg:1tyn6z:Tf3EV7x1pqiQsKPEhkjLC9sBcoLrXgyTID9UD0SjIiI"
 
         # 서명 분리 (':'를 기준으로 앞부분만 추출)
         encoded_data = raw_session_data.split(":")[0]
 
-        # Base64 디코딩 후 JSON 변환
-        decoded_data = base64.b64decode(encoded_data).decode("utf-8")
-        session_dict = json.loads(decoded_data)
+        # Base64 패딩 추가 (부족한 만큼만)
+        missing_padding = len(encoded_data) % 4
+        if missing_padding:
+            encoded_data += "=" * (4 - missing_padding)
 
-        # 출력
-        print("✅ 복호화된 세션 데이터:", session_dict)
+        try:
+            # Base64 URL-safe 디코딩
+            decoded_data = base64.urlsafe_b64decode(encoded_data)
+
+            # Django는 일부 데이터를 zlib 압축하여 저장함 → 복호화 시도
+            try:
+                decompressed_data = zlib.decompress(decoded_data).decode("utf-8")
+            except zlib.error:
+                decompressed_data = decoded_data.decode(
+                    "utf-8"
+                )  # 압축되지 않은 경우 그대로 사용
+
+            # JSON 파싱
+            session_dict = json.loads(decompressed_data)
+
+            print("✅ 복호화된 세션 데이터:", session_dict)
+        except Exception as e:
+            print("❌ 디코딩 실패:", e)
 
     # def test_session_crud(self):
     #     """세션 생성, 조회, 수정, 삭제 테스트"""

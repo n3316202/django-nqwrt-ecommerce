@@ -32,4 +32,14 @@ def cart_add(request):
         response = JsonResponse({"qty": cart_quantity})
         return response
 
-    print("카트========마지막")
+
+# dev_28
+def cart_summary(request):
+    # Get the cart
+    cart = Cart(request)
+
+    return render(
+        request,
+        "cart/cart_summary.html",
+        {"cart": cart},
+    )

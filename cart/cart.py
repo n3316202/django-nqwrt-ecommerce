@@ -36,6 +36,7 @@ class Cart(object):
 
             yield item
 
+    # ✅ 복호화된 세션 데이터: {'cart': {'1': {'quantity': 1, 'price': '24000.00'}}}
     def add(self, product, quantity=1, is_update=False):
         product_id = str(product.id)
 
