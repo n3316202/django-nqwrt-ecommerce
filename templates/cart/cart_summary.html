@@ -106,7 +106,6 @@
     //dev_20
     $(document).on('click', '.update-cart', function (e) {
       let productid = $(this).data('index');
-      //let qty = $('#select' + productid + ' ' + 'option:selected').text();
       let qty = $("#input-"+ productid).val();
 
       $.ajax({
