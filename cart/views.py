@@ -33,7 +33,7 @@ def cart_add(request):
         return response
 
 
-# dev_28
+# dev_18
 def cart_summary(request):
     # Get the cart
     cart = Cart(request)
@@ -43,3 +43,20 @@ def cart_summary(request):
         "cart/cart_summary.html",
         {"cart": cart},
     )
+
+
+# dev_19
+def cart_delete(request):
+    cart = Cart(request)
+
+    if request.POST.get("action") == "post":
+        # get stuff
+        product_id = int(request.POST.get("product_id"))
+        print("product_id =============== ", product_id)
+
+        product = Product.objects.get(id=product_id)
+
+        cart.remove(product)
+
+        response = JsonResponse({"product": product_id})
+        return response

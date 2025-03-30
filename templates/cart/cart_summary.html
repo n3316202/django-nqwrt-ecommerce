@@ -101,4 +101,27 @@
   </div>
 {% endblock footer %}
 {% block script %}
+  <script>
+  $(document).on('click', '.delete-product', function (e) {
+    let productid = $(this).data('index');
+
+    $.ajax({
+      type: 'POST',
+      url: '{% url "cart:cart_delete" %}',
+      data: {
+        product_id: $(this).data('index'),
+
+        csrfmiddlewaretoken: '{{  csrf_token }}',
+        action: 'post',
+      },
+      success: function (json) {
+        console.log(json);
+        location.reload(); //페이지 새로 고침
+      },
+      error: function (e) {
+        console.log(e);
+      },
+    });
+  });
+  </script>
 {% endblock script %}
