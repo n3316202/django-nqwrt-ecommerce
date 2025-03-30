@@ -10,11 +10,9 @@ from cart.cart import Cart
 def cart_add(request):
 
     cart = Cart(request)
-
     print("카트========", cart)
 
     if request.POST.get("action") == "post":
-        print("=========")
 
         # get stuff
         product_id = int(request.POST.get("product_id"))
@@ -32,7 +30,6 @@ def cart_add(request):
         # Get Cart Quantity
         cart_quantity = cart.__len__()
         response = JsonResponse({"qty": cart_quantity})
-
         return response
 
     print("카트========마지막")
