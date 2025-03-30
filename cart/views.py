@@ -60,3 +60,22 @@ def cart_delete(request):
 
         response = JsonResponse({"product": product_id})
         return response
+
+
+# dev_20
+def cart_update(request):
+    cart = Cart(request)
+
+    if request.POST.get("action") == "update":
+        # get stuff
+        product_id = int(request.POST.get("product_id"))
+        print("product_id =============== ", product_id)
+
+        quantity = int(request.POST.get("product_qty"))
+        product = Product.objects.get(id=product_id)
+
+        # def add(self, product, quantity=1, is_update=False):
+        cart.add(product, quantity, True)
+
+        response = JsonResponse({"product": product_id})
+        return response

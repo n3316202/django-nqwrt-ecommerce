@@ -70,7 +70,10 @@
                     <br />
                     <div class="row justify-content-center">
                       <div class="col-md-2">Quantity</div>
-                      <input type="text" value="{{ item.quantity }}" class="col-md-2">
+                      <input id="input_qty"
+                             type="text"
+                             value="{{ item.quantity }}"
+                             class="col-md-2">
                     </div>
                     <br />
                     <a href="{% url 'store:home' %}" class="btn btn-secondary">홈으로</a>
@@ -102,6 +105,30 @@
 {% endblock footer %}
 {% block script %}
   <script>
+    $(document).on('click', '.update-cart', function (e) {
+      let productid = $(this).data('index');
+      //let qty = $('#select' + productid + ' ' + 'option:selected').text();
+      let qty = $('#input_qty').val();
+
+      $.ajax({
+        type: 'post',
+        url: '{% url "cart:cart_update" %}',
+        data: {
+          product_id: $(this).data('index'),
+          product_qty: qty,
+          csrfmiddlewaretoken: '{{  csrf_token }}',
+          action: 'update'
+        },
+        success: function (json) {
+          console.log(json);
+          location.reload();
+        },
+        error: function (e) {
+          console.log(e);
+        }
+      });
+    });
+
   $(document).on('click', '.delete-product', function (e) {
     let productid = $(this).data('index');
 
@@ -110,7 +137,6 @@
       url: '{% url "cart:cart_delete" %}',
       data: {
         product_id: $(this).data('index'),
-
         csrfmiddlewaretoken: '{{  csrf_token }}',
         action: 'post',
       },
