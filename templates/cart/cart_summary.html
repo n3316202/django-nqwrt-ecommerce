@@ -71,7 +71,7 @@
                     <div class="row justify-content-center">
                       <div class="col-md-2">Quantity</div>
                       <!--dev_20-->
-                      <input id="input_qty"
+                      <input id="input-{{ item.product.id }}"
                              type="text"
                              value="{{ item.quantity }}"
                              class="col-md-2">
@@ -110,7 +110,7 @@
     $(document).on('click', '.update-cart', function (e) {
       let productid = $(this).data('index');
       //let qty = $('#select' + productid + ' ' + 'option:selected').text();
-      let qty = $('#input_qty').val();
+      let qty = $("#input-"+ productid).val();
 
       $.ajax({
         type: 'post',
