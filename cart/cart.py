@@ -41,7 +41,14 @@ class Cart(object):
         product_id = str(product.id)
 
         if product_id not in self.cart:
-            self.cart[product_id] = {"quantity": 0, "price": str(product.price)}
+            # dev_21
+            if product.is_sale:
+                self.cart[product_id] = {
+                    "quantity": 0,
+                    "price": str(product.sale_price),
+                }
+            else:
+                self.cart[product_id] = {"quantity": 0, "price": str(product.price)}
 
         if is_update:
             self.cart[product_id]["quantity"] = quantity
@@ -63,3 +70,9 @@ class Cart(object):
     def clear(self):
         self.session[settings.CART_SESSION_ID] = {}
         self.session.modified = True
+
+    # dev_21
+    def get_product_total(self):
+        return sum(
+            Decimal(item["price"]) * item["quantity"] for item in self.cart.values()
+        )

@@ -41,7 +41,7 @@ def cart_summary(request):
     return render(
         request,
         "cart/cart_summary.html",
-        {"cart": cart},
+        {"cart": cart, "totals": cart.get_product_total},  # dev_21
     )
 
 

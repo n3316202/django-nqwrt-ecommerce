@@ -88,7 +88,8 @@
             </div>
           </div>
         {% endfor %}
-        {% comment %} <h3 class="text-center">Total:{{ totals }}원</h3> {% endcomment %}
+        <!--dev_21-->
+        <h3 class="text-center">Total:{{ totals|floatformat:"0"|default_if_none:"0"|intcomma }}원</h3>
         <br />
         <br />
         <br />
