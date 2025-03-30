@@ -5,6 +5,7 @@ from store.models import Product
 
 from django.contrib.sessions.models import Session
 from django.contrib.sessions.backends.db import SessionStore
+from accounts.models import User
 
 
 # Create your views here.
@@ -13,6 +14,9 @@ class Cart(object):
 
     def __init__(self, request):
         self.session = request.session
+        # dev_25
+        # 로그인이 되어 있다면, 로그인 유저에 대한 정보를 빼내기 위하여...
+        self.request = request
 
         cart = self.session.get(settings.CART_SESSION_ID)
         if not cart:
@@ -56,6 +60,14 @@ class Cart(object):
             self.cart[product_id]["quantity"] += quantity
 
         self.save()
+
+        # dev_25
+        if self.request.user.is_authenticated:
+            current_user = User.objects.filter(user__id=self.request.user.id)
+            # Convert {'3':1} to {"3":1}
+            carty = str(self.cart)
+            carty = carty.replace("'", '"')
+            current_user.update(old_cart=str(carty))
 
     def save(self):
         self.session[settings.CART_SESSION_ID] = self.cart
