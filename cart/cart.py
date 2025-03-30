@@ -3,6 +3,9 @@ from decimal import Decimal
 from django.conf import settings
 from store.models import Product
 
+from django.contrib.sessions.models import Session
+from django.contrib.sessions.backends.db import SessionStore
+
 
 # Create your views here.
 # dev_15
