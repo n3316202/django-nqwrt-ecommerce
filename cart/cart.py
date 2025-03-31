@@ -64,16 +64,24 @@ class Cart(object):
         self.save()
 
         # dev_23
+        # if self.request.user.is_authenticated:
+        #     current_user = User.objects.filter(id=self.request.user.id)
+        #     # Convert {'3':1} to {"3":1}
+        #     carty = str(self.cart)
+        #     carty = carty.replace("'", '"')
+        #     current_user.update(old_cart=str(carty))
+
+    def save(self):
+        self.session[settings.CART_SESSION_ID] = self.cart
+        self.session.modified = True
+
+        # dev_23
         if self.request.user.is_authenticated:
             current_user = User.objects.filter(id=self.request.user.id)
             # Convert {'3':1} to {"3":1}
             carty = str(self.cart)
             carty = carty.replace("'", '"')
             current_user.update(old_cart=str(carty))
-
-    def save(self):
-        self.session[settings.CART_SESSION_ID] = self.cart
-        self.session.modified = True
 
     def remove(self, product):
         product_id = str(product.id)
