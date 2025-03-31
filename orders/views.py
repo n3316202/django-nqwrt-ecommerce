@@ -34,6 +34,8 @@ def orders_create(request):
             # Get the oorder ID
             order_id = create_order.pk
 
+            
+
             # Get product info
             for product in cart_products():
                 product_id = product.id
