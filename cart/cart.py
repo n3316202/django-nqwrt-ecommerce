@@ -44,8 +44,17 @@ class Cart(object):
 
         for item in self.cart.values():
             item["price"] = Decimal(item["price"])
-
             item["total_price"] = item["price"] * item["quantity"]
+
+            # dev_24
+            product = item["product"]
+
+            if product.is_sale:
+                item["sale_price"] = product.sale_price
+                item["sale_total_price"] = product.sale_price * item["quantity"]
+            else:
+                item["sale_price"] = 0
+                item["sale_total_price"] = 0
 
             yield item
         # https://chatgpt.com/c/67e8fc58-7a48-8007-8db2-1b97cb43ecb6
