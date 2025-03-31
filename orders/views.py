@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from cart.cart import Cart
 from django.contrib import messages
 from .models import Order, OrderItem
+from store.models import Product
 
 
 # dev_24
@@ -10,15 +11,7 @@ from .models import Order, OrderItem
 def orders_create(request):
 
     if request.POST:
-
         cart = Cart(request)
-        # cart_products = cart.get_products
-        # quantiles = cart.get_quantities
-        # cart_delete = cart.delete
-
-        # totals = cart.cart_total()
-        # print(totals)
-
         # Gether Order Info
         if request.user.is_authenticated:
             # logged in
@@ -34,32 +27,24 @@ def orders_create(request):
             # Get the oorder ID
             order_id = create_order.pk
 
-            
+            # {'quantity': 1, 'price': Decimal('10000.00'), 'product': <Product: 너를위한-장고>, 'total_price': Decimal('10000.00')}
+            for item in cart:
+                print(item)
+                # Create Order Item
+                create_order_item = OrderItem(
+                    order_id=order_id,
+                    product_id=item["product"].id,
+                    quantity=item["quantity"],
+                    price=item["price"],
+                )
+                create_order_item.save()
 
-            # Get product info
-            for product in cart_products():
-                product_id = product.id
-                # Get product price
-                if product.is_sale:
-                    price = product.sale_price
-                else:
-                    price = product.price
-
-                # Get quantity
-                for key, value in quantiles().items():
-                    if int(key) == product.id:
-                        # Create Order Item
-                        create_order_item = OrderItem(
-                            order_id=order_id,
-                            product_id=product_id,
-                            quantity=value,
-                            price=price,
-                        )
-                        create_order_item.save()
+            cart_keys = list(cart.get_dic_cart().keys())
 
             # Delete cart item(만약 카트도 지우고 싶다면)
-            for key in list(quantiles().keys()):
-                cart_delete(key)
+            for product_id in cart_keys:
+                product = Product.objects.get(id=product_id)
+                cart.remove(product)
 
             messages.success(request, "주문이 완료 되었습니다.")
             return redirect("/")

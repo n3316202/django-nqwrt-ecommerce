@@ -28,7 +28,13 @@ class Cart(object):
     def __len__(self):
         return sum(item["quantity"] for item in self.cart.values())
 
+    # {'quantity': 1, 'price': Decimal('10000.00'), 'product': <Product: 너를위한-장고>, 'total_price': Decimal('10000.00')}
     def __iter__(self):
+
+        # {
+        #     "1": {"quantity": 2, "price": "15000"},
+        #     "3": {"quantity": 1, "price": "20000"}
+        # }
         product_ids = self.cart.keys()
 
         products = Product.objects.filter(id__in=product_ids)
@@ -38,9 +44,18 @@ class Cart(object):
 
         for item in self.cart.values():
             item["price"] = Decimal(item["price"])
+
             item["total_price"] = item["price"] * item["quantity"]
 
             yield item
+        # https://chatgpt.com/c/67e8fc58-7a48-8007-8db2-1b97cb43ecb6
+        # generator  처리후
+        # {
+        #     "quantity": 2,
+        #     "price": Decimal("15000"),
+        #     "total_price": Decimal("30000"),
+        #     "product": Product(id=1, name="상품1")
+        # }
 
     # ✅ 복호화된 세션 데이터: {'cart': {'1': {'quantity': 1, 'price': '24000.00'}}}
     def add(self, product, quantity=1, is_update=False):
@@ -98,3 +113,8 @@ class Cart(object):
         return sum(
             Decimal(item["price"]) * item["quantity"] for item in self.cart.values()
         )
+
+    # dev_24
+    def get_dic_cart(self):
+        dic_cart = self.cart
+        return dic_cart
