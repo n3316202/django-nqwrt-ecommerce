@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
 from django.contrib import messages
 
 from .forms import RegisterUserForm
+import json
+from cart.cart import Cart
+from accounts.models import User
 
 
 # dev_9
@@ -24,6 +26,20 @@ def login_user(request):
 
         if user is not None:
             login(request, user)
+
+            # dev_25
+            # 카트
+            current_user = User.objects.get(id=request.user.id)
+            saved_cart = current_user.old_cart
+
+            if saved_cart:
+                converted_cart = json.loads(saved_cart)
+                # Add
+                cart = Cart(request)
+                # loop
+                for key, value in converted_cart.items():
+                    cart.db_add(product=key, quantity=value)
+
             messages.success(request, "You Have been logged in")
             return redirect("/")
         else:

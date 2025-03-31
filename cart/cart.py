@@ -18,6 +18,8 @@ class Cart(object):
         # 로그인이 되어 있다면, 로그인 유저에 대한 정보를 빼내기 위하여...
         self.request = request
 
+        print("유저========", self.request.user.username)
+
         cart = self.session.get(settings.CART_SESSION_ID)
         if not cart:
             cart = self.session[settings.CART_SESSION_ID] = {}
@@ -63,7 +65,7 @@ class Cart(object):
 
         # dev_25
         if self.request.user.is_authenticated:
-            current_user = User.objects.filter(user__id=self.request.user.id)
+            current_user = User.objects.filter(id=self.request.user.id)
             # Convert {'3':1} to {"3":1}
             carty = str(self.cart)
             carty = carty.replace("'", '"')
