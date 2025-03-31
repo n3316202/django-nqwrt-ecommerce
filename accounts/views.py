@@ -28,7 +28,7 @@ def login_user(request):
         if user is not None:
             login(request, user)
 
-            # dev_25
+            # dev_23
             # 카트
             current_user = User.objects.get(id=request.user.id)
             saved_cart = current_user.old_cart

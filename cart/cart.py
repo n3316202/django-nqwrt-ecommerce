@@ -63,7 +63,7 @@ class Cart(object):
 
         self.save()
 
-        # dev_25
+        # dev_23
         if self.request.user.is_authenticated:
             current_user = User.objects.filter(id=self.request.user.id)
             # Convert {'3':1} to {"3":1}
