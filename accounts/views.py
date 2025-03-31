@@ -7,6 +7,7 @@ from .forms import RegisterUserForm
 import json
 from cart.cart import Cart
 from accounts.models import User
+from store.models import Product
 
 
 # dev_9
@@ -36,9 +37,15 @@ def login_user(request):
                 converted_cart = json.loads(saved_cart)
                 # Add
                 cart = Cart(request)
+
+                # {"1": {"quantity": 5, "price": "10000"}}
                 # loop
-                for key, value in converted_cart.items():
-                    cart.db_add(product=key, quantity=value)
+                for product_id, data in converted_cart.items():
+                    quantity = data["quantity"]
+                    print("상품 ID:", product_id)  # 1
+                    print("수량:", quantity)  # 5
+                    product = Product.objects.get(id=product_id)
+                    cart.add(product, quantity)
 
             messages.success(request, "You Have been logged in")
             return redirect("/")
