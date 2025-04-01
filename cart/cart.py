@@ -47,14 +47,15 @@ class Cart(object):
             item["total_price"] = item["price"] * item["quantity"]
 
             # dev_24
-            product = item["product"]
+            # dev_25 밑에서 is_sale 값을 price 에 넣고 있음
+            # product = item["product"]
 
-            if product.is_sale:
-                item["sale_price"] = product.sale_price
-                item["sale_total_price"] = product.sale_price * item["quantity"]
-            else:
-                item["sale_price"] = 0
-                item["sale_total_price"] = 0
+            # if product.is_sale:
+            #     item["sale_price"] = product.sale_price
+            #     item["sale_total_price"] = product.sale_price * item["quantity"]
+            # else:
+            #     item["sale_price"] = 0
+            #     item["sale_total_price"] = 0
 
             yield item
         # https://chatgpt.com/c/67e8fc58-7a48-8007-8db2-1b97cb43ecb6

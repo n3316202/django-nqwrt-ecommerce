@@ -91,11 +91,15 @@
         <!--dev_21-->
         <div class="text-center">
           <h3 class="text-center">Total:{{ totals|floatformat:"0"|default_if_none:"0"|intcomma }}원</h3>
+          <!--dev_25-->
+          <a href="{% url 'orders:orders_create' %}">
+            <button type="button" class="btn btn-success text-center">주문</button>
+          </a>
           <!--dev_24-->
-          <form method="post" action="{% url 'orders:orders_create' %}">
+          {% comment %} <form method="post" action="{% url 'orders:orders_create' %}">
             {% csrf_token %}
             <button type="submit" class="btn btn-success text-center create-orders">주문</button>
-          </form>
+          </form> {% endcomment %}
         </div>
         <br />
         <br />
