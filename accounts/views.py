@@ -32,7 +32,7 @@ def login_user(request):
     else:
         return render(request, "accounts/login.html", {})
 
-
+# dev_10
 def register_user(request):
     form = RegisterUserForm()
 
