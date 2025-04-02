@@ -13,7 +13,7 @@ from payment.models import Payment
 from django.contrib import messages
 
 
-# dev_25
+# dev_26
 # Create your views here.
 @login_required
 def payment_process(request):
