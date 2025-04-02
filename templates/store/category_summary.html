@@ -5,8 +5,8 @@
   {% include "layout/head.html" %}
 {% endblock head %}
 {% block navi %}
+  {% include "layout/navbar.html" %}
   <div class="d-flex flex-column vh-100 justify-content-between">
-    {% include "layout/navbar.html" %}
   {% endblock navi %}
   {% block header %}
     <header class="bg-dark py-5">
@@ -31,14 +31,6 @@
                 <a href="{% url 'store:category' category %}">{{ category }}</a>
               </h3>
             {% endfor %}
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
           </div>
         </center>
       </div>
