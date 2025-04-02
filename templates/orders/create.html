@@ -158,15 +158,9 @@
                                                     </div>
                                                 </th>
                                                 <td class="py-5 text-center">{{ item.product.name }}</td>
-                                                {% if product.is_sale %}
-                                                    <td class="py-5">{{ item.sale_price }}</td>
-                                                    <td class="py-5 text-center">{{ item.quantity }}</td>
-                                                    <td class="py-5">{{ item.sale_total_price }}</td>
-                                                {% else %}
-                                                    <td class="py-5">{{ item.price }}</td>
-                                                    <td class="py-5 text-center">{{ item.quantity }}</td>
-                                                    <td class="py-5">{{ item.total_price }}</td>
-                                                {% endif %}
+                                                <td class="py-5">{{ item.price }}</td>
+                                                <td class="py-5 text-center">{{ item.quantity }}</td>
+                                                <td class="py-5">{{ item.total_price }}</td>
                                             </tr>
                                         {% endfor %}
                                         {% comment %} <tr>
@@ -200,7 +194,7 @@
                                             </td>
                                             <td class="py-5">
                                                 <div class="py-3 border-bottom border-top">
-                                                    <p class="mb-0 text-dark">{{ total_price }}원</p>
+                                                    <p class="mb-0 text-dark">{{ cart.get_product_total }}원</p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -245,7 +239,7 @@
                                             <td class="py-5"></td>
                                             <td class="py-5">
                                                 <div class="py-3 border-bottom border-top">
-                                                    <p class="mb-0 text-dark">{{ total_price }}원</p>
+                                                    <p class="mb-0 text-dark">{{ cart.get_product_total }}원</p>
                                                 </div>
                                             </td>
                                         </tr>

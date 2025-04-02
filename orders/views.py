@@ -70,16 +70,9 @@ def orders_create(request):
             return redirect("/login")
 
     else:
-        # dev_25
-        cart = Cart(request)
-
         # Get Current uer's shipping Info
         # shipping_user = ShippingAddress.objects.get(id=request.user.id)
         # Get User's Shipping Form
         # form = ShippingForm(request.POST or None, instance=shipping_user)
 
-        return render(
-            request,
-            "orders/create.html",
-            {"cart": cart},
-        )
+        return render(request, "orders/create.html")
