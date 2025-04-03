@@ -22,19 +22,19 @@ class Cart(object):
     def __len__(self):
         return sum(item["quantity"] for item in self.cart.values())
 
-    def __iter__(self):
-        product_ids = self.cart.keys()
+    # def __iter__(self):
+    #     product_ids = self.cart.keys()
 
-        products = Product.objects.filter(id__in=product_ids)
+    #     products = Product.objects.filter(id__in=product_ids)
 
-        for product in products:
-            self.cart[str(product.id)]["product"] = product
+    #     for product in products:
+    #         self.cart[str(product.id)]["product"] = product
 
-        for item in self.cart.values():
-            item["price"] = Decimal(item["price"])
-            item["total_price"] = item["price"] * item["quantity"]
+    #     for item in self.cart.values():
+    #         item["price"] = Decimal(item["price"])
+    #         item["total_price"] = item["price"] * item["quantity"]
 
-            yield item
+    #         yield item
 
     def add(self, product, quantity=1, is_update=False):
         product_id = str(product.id)
