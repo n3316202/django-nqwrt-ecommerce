@@ -10,19 +10,6 @@ from api.serializers import ProductSerializer
 # Create your views here.
 
 
-# dev_28
-# 기존방식
-def hello_world(request):
-    return HttpResponse("Hello World!")
-
-
-# https://www.django-rest-framework.org/api-guide/views/#api_view
-# DRF 방식
-@api_view(["GET"])
-def hello_world_drf(request):
-    return Response({"message": "Hello World!"})
-
-
 
 # dev_29 추가 되도록
 @api_view(["GET", "POST"])
