@@ -12,4 +12,5 @@ urlpatterns = [
     path("hello_world/", views.hello_world),
     path("hello_world_drf/", views.hello_world_drf),
     path("products/", views.products_api),
+    path("product/<int:pk>/", views.product_api),  # dev_30
 ]
