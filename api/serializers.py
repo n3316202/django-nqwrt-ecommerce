@@ -13,25 +13,26 @@ from store.models import Category, Product
 # request / response 데이터 핸들링 ( to_internal_value() / to_representation() )
 # nested serialization
 
+
 # def_29
 # serializers.py 생성
-class ProductSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Product
-        fields = "__all__"  # fields = [ "id", "name", "price", "category", "is_sale","sale_price"]
+# class ProductSerializer(serializers.ModelSerializer):
+#    class Meta:
+#        model = Product
+#        fields = "__all__"  # fields = [ "id", "name", "price", "category", "is_sale","sale_price"]
 
-        # def validate_price(self, value):
-        #     if value > 1000:
-        #         raise serializers.ValidationError("Price must be a positive value.")
-        #     return value
+# def validate_price(self, value):
+#     if value > 1000:
+#         raise serializers.ValidationError("Price must be a positive value.")
+#     return value
 
-        # def validate_name(self, value):
-        #     if len(value) > 3:
-        #         raise serializers.ValidationError("Name must be at most 3 characters long.")
-        #     return value
+# def validate_name(self, value):
+#     if len(value) > 3:
+#         raise serializers.ValidationError("Name must be at most 3 characters long.")
+#     return value
 
 
-class ProductSerializer2(serializers.Serializer):
+class ProductSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     name = serializers.CharField(max_length=100)
     price = serializers.IntegerField()
