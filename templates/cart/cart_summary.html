@@ -110,7 +110,6 @@
       url: '{% url "cart:cart_delete" %}',
       data: {
         product_id: $(this).data('index'),
-
         csrfmiddlewaretoken: '{{  csrf_token }}',
         action: 'post',
       },
