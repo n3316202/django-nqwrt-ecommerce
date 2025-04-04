@@ -33,7 +33,7 @@ def cart_add(request):
         return response
 
 
-# dev_28
+# dev_18
 def cart_summary(request):
     # Get the cart
     cart = Cart(request)
