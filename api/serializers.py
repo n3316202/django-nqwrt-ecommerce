@@ -21,15 +21,15 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = "__all__"  # fields = [ "id", "name", "price", "category", "is_sale","sale_price"]
 
-    def validate_price(self, value):
-        if value > 1000:
-            raise serializers.ValidationError("Price must be a positive value.")
-        return value
+    # def validate_price(self, value):
+    #     if value > 1000:
+    #         raise serializers.ValidationError("Price must be a positive value.")
+    #     return value
 
-    def validate_name(self, value):
-        if len(value) > 3:
-            raise serializers.ValidationError("Name must be at most 3 characters long.")
-        return value
+    # def validate_name(self, value):
+    #     if len(value) > 3:
+    #         raise serializers.ValidationError("Name must be at most 3 characters long.")
+    #     return value
 
 
 # class ProductSerializer(serializers.Serializer):
