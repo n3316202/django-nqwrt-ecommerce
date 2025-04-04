@@ -20,6 +20,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = "__all__"  # fields = [ "id", "name", "price", "category", "is_sale","sale_price"]
+        depth = 1  # dev_32 ForeignKey 필드 자동 직렬화
 
     # def validate_price(self, value):
     #     if value > 1000:
@@ -45,8 +46,20 @@ class ProductSerializer(serializers.ModelSerializer):
 #     is_sale = serializers.BooleanField()
 #     sale_price = serializers.IntegerField()
 
+
 # dev_31
+# class CategorySerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Category
+#         fields = "__all__"
+
+
+# dev_32
+# CategorySerializer에서 일대다 관계 보이게 하기
+# 역방향 참조
 class CategorySerializer(serializers.ModelSerializer):
+    products = ProductSerializer(many=True, read_only=True) #related_name=products
+
     class Meta:
         model = Category
         fields = "__all__"
