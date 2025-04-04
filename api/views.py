@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from store.models import Product
+from api.serializers import ProductSerializer
 
 # Create your views here.
 
@@ -19,3 +20,12 @@ def hello_world(request):
 @api_view(["GET"])
 def hello_world_drf(request):
     return Response({"message": "Hello World!"})
+
+
+# dev_29
+@api_view(["GET"])
+def products_api(request):
+    products = Product.objects.all()
+    serializer = ProductSerializer(products, many=True)
+
+    return Response(serializer.data)
