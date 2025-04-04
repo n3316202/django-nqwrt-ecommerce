@@ -10,6 +10,7 @@ urlpatterns = [
     path("cart/", include("cart.urls")),  # dev_15
     path("orders/", include("orders.urls")),  # dev_24
     path("payment/", include("payment.urls")),  # dev_26
+    path("api/", include("api.urls")),  # dev_28
 ]
 
 # dev_2

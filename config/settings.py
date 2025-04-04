@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     "cart",  # dev_15
     "orders",  # dev_24
     "payment",  # dev_26
+    "rest_framework",  # dev_28
+    "api",  # dev_28
 ]
 
 MIDDLEWARE = [
