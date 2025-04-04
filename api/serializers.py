@@ -44,3 +44,9 @@ class ProductSerializer(serializers.ModelSerializer):
 #     image = serializers.ImageField()
 #     is_sale = serializers.BooleanField()
 #     sale_price = serializers.IntegerField()
+
+# dev_31
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = "__all__"
