@@ -7,6 +7,7 @@ from api.serializers import CategorySerializer
 from store.models import Category
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 
 from rest_framework.mixins import (
     ListModelMixin,
@@ -167,7 +168,13 @@ class CategoryAPI(RetrieveUpdateDestroyAPIView):
 
 
 # dev_35
-# List Route
+
+# ✅ ViewSet이 뭐야?
+# ViewSet은 GET, POST, PUT, DELETE 같은 HTTP 메서드에 대응하는 뷰 함수들을 하나로 묶은 클래스입니다.
+# 기존에 각각의 API 뷰를 ListAPIView, CreateAPIView, RetrieveAPIView 등으로 나눴다면,
+# ViewSet은 이걸 한 방에 다 처리
+
+
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer

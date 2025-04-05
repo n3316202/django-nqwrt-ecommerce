@@ -6,8 +6,15 @@ from django.conf.urls.static import static
 # dev_30
 from .views import base_views, product_views, category_views
 
+# dev_34
+from rest_framework import routers
+
 # dev_28
 app_name = "api"
+
+# dev_35
+router = routers.DefaultRouter()
+router.register(r"categories", category_views.CategoryViewSet)
 
 # dev_30
 urlpatterns = [
@@ -23,6 +30,8 @@ urlpatterns = [
     # dev_33
     # path("categories/", category_views.CategoriesMixins.as_view()),  # dev_33
     # path("category/<int:pk>/", category_views.CategoryMixins.as_view()),  # dev_33
-    path("categories/", category_views.CategoriesAPI.as_view()),  # dev_34
-    path("category/<int:pk>/", category_views.CategoryAPI.as_view()),  # dev_34
+    # path("categories/", category_views.CategoriesAPI.as_view()),  # dev_34
+    # path("category/<int:pk>/", category_views.CategoryAPI.as_view()),  # dev_34
+    # dev_34 http://127.0.0.1:8000/api/categories/
+    path("", include(router.urls)),
 ]

@@ -5,18 +5,19 @@
         "editor.formatOnType": true,
         "editor.wordBasedSuggestions": "off",
         "editor.defaultFormatter": "ms-python.black-formatter",
-        "editor.formatOnSave": true
+        "editor.formatOnSave": true,
+
     },
     "[html][django-html][handlebars][hbs][mustache][jinja][jinja-html][nj][njk][nunjucks][twig]": {
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "monosans.djlint"
     },
     "djlint.ignore": ["T002", "T032", "T001", "D018", "H030", "H031","H006","H021"],
-    "python.analysis.packageIndexDepths": [
-        {
-            "name": "",
-            "depth": 10,
-            "includeAllSymbols": true
-        }
-    ],
+
+    "python.languageServer": "Pylance",
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.autoSearchPaths": true,
+    "python.autoComplete.extraPaths": [
+        "${workspaceFolder}",
+      ],
 }
