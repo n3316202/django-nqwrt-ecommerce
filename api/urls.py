@@ -21,6 +21,8 @@ urlpatterns = [
     # path("categories/", category_views.CategoriesAPI.as_view()),  # dev_31
     # path("category/<int:pk>/", category_views.CategoryAPI.as_view()),  # dev_31
     # dev_33
-    path("categories/", category_views.CategoriesMixins.as_view()),  # dev_33
-    path("category/<int:pk>/", category_views.CategoryMixins.as_view()),  # dev_33
+    # path("categories/", category_views.CategoriesMixins.as_view()),  # dev_33
+    # path("category/<int:pk>/", category_views.CategoryMixins.as_view()),  # dev_33
+    path("categories/", category_views.CategoriesAPI.as_view()),  # dev_34
+    path("category/<int:pk>/", category_views.CategoryAPI.as_view()),  # dev_34
 ]
