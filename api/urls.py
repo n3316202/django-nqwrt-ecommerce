@@ -18,8 +18,8 @@ urlpatterns = [
     path("products/", product_views.products_api),
     path("product/<int:pk>/", product_views.product_api),  # dev_30
     # dev_31
-    path("categories/", category_views.CategoriesAPI.as_view()),  # dev_31
-    path("category/<int:pk>/", category_views.CategoryAPI.as_view()),  # dev_31
+    # path("categories/", category_views.CategoriesAPI.as_view()),  # dev_31
+    # path("category/<int:pk>/", category_views.CategoryAPI.as_view()),  # dev_31
     # dev_33
     path("categories/", category_views.CategoriesMixins.as_view()),  # dev_33
     path("categories/<int:pk>/", category_views.CategoryMixins.as_view()),  # dev_33
