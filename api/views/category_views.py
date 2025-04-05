@@ -9,6 +9,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
+
 from rest_framework.mixins import (
     ListModelMixin,
     CreateModelMixin,
@@ -25,6 +26,8 @@ from rest_framework.generics import (
 
 from rest_framework.exceptions import ValidationError, PermissionDenied
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
+
+from rest_framework.decorators import action
 
 # # dev_31
 # class CategoriesAPI(APIView):
@@ -175,6 +178,48 @@ class CategoryAPI(RetrieveUpdateDestroyAPIView):
 # ViewSet은 이걸 한 방에 다 처리
 
 
+# class CategoryViewSet(ModelViewSet):
+#     queryset = Category.objects.all()
+#     serializer_class = CategorySerializer
+
+
+# 1.커스텀 엔드포인트 추가
+
+
+# 커스터마이징     포인트	메서드
+# 쿼리셋 필터링	        get_queryset()
+# 시리얼라이저 변경	     get_serializer_class()
+# 생성 로직 수정	        perform_create() or create()
+# 삭제 제어	            perform_destroy()
+# 커스텀 URL 추가	    @action(detail=True)
+
+
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+    # http://127.0.0.1:8000/api/categories/1/products/ 라는 URL로 호출
+    # detail=True	/api/resource/<pk>/custom/	특정 객체에 대해 작동 (PK 필요)
+    # detail=False	/api/resource/custom/	전체 또는 리스트 대상 (PK 불필요)
+    @action(detail=True, methods=["get"])
+    def products(self, request, pk=None):
+        category = self.get_object()
+        products = category.products.all()
+        data = [{"name": p.name, "price": p.price} for p in products]
+        return Response({"category": category.name, "products": data})
+
+    # 🎯 특정 동작을 아예 오버라이드
+    def create(self, request, *args, **kwargs):
+        response = super().create(request, *args, **kwargs)
+        response.data = {
+            "message": "카테고리가 성공적으로 생성되었습니다.",
+            "data": response.data,
+        }
+        return response
+
+    # 1. get_queryset() 커스터마이징 (권한별 필터링)
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_staff:
+            return Category.objects.filter(id=1)
+        return Category.objects.all()

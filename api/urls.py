@@ -33,5 +33,12 @@ urlpatterns = [
     # path("categories/", category_views.CategoriesAPI.as_view()),  # dev_34
     # path("category/<int:pk>/", category_views.CategoryAPI.as_view()),  # dev_34
     # dev_34 http://127.0.0.1:8000/api/categories/
+    # 이렇게 하면 다음 경로들이 자동으로 만들어집니다:
+    # GET /categories/
+    # POST /categories/
+    # GET /categories/<pk>/
+    # PUT /categories/<pk>/
+    # PATCH /categories/<pk>/
+    # DELETE /categories/<pk>/
     path("", include(router.urls)),
 ]
