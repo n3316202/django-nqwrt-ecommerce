@@ -164,3 +164,10 @@ class CategoryAPI(RetrieveUpdateDestroyAPIView):
         return Response(
             {"message": "카테고리가 삭제되었습니다."}, status=status.HTTP_204_NO_CONTENT
         )
+
+
+# dev_35
+# List Route
+class CategoryViewSet(ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
