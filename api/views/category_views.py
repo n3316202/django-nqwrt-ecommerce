@@ -8,6 +8,15 @@ from store.models import Category
 from rest_framework import status
 from rest_framework.views import APIView
 
+from rest_framework.mixins import (
+    ListModelMixin,
+    CreateModelMixin,
+    DestroyModelMixin,
+    RetrieveModelMixin,
+    UpdateModelMixin,
+)
+from rest_framework.generics import GenericAPIView
+
 
 # dev_31
 class CategoriesAPI(APIView):
@@ -40,3 +49,33 @@ class CategoryAPI(APIView):
         category = get_object_or_404(Category, id=pk)
         category.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+# dev_33
+class CategoriesMixins(
+    ListModelMixin, CreateModelMixin, DestroyModelMixin, GenericAPIView
+):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request)
+
+
+class CategoryMixins(
+    RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin, GenericAPIView
+):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
