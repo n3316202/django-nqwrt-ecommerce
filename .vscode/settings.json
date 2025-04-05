@@ -18,4 +18,22 @@
     "python.autoComplete.extraPaths": [
         "${workspaceFolder}",
       ],
+    "python.languageServer": "Pylance",
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.indexing": true,
+    "python.analysis.useLibraryCodeForTypes": true,
+    "python.analysis.extraPaths": [
+        "./",  // 프로젝트 루트
+        "./store"  // 앱 디렉토리
+    ],
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportUnknownDecorator": "none"
+    }
 }
+
+// "python.languageServer": "Default", // languageServer는 기본적으로 pylance를 사용한다. Default로 설정하면 pylance로 설정이 된다.
+// "python.analysis.indexing": true, // 자동완성에 필요한 옵션
+// "python.analysis.autoImportCompletions": true, // 입력시 Auto-import 자동완성을 활성화
+// // 현재 vscode에서 열려있는 폴더 기준으로, 파이썬 파일 및 경로를 자동완성하는데 필요한 옵션
+// "python.analysis.extraPaths": ["${workspaceFolder}"],
+// "python.autoComplete.extraPaths": ["${workspaceFolder}"]
