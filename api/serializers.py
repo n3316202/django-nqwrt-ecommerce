@@ -58,7 +58,8 @@ class ProductSerializer(serializers.ModelSerializer):
 # CategorySerializer에서 일대다 관계 보이게 하기
 # 역방향 참조
 class CategorySerializer(serializers.ModelSerializer):
-    products = ProductSerializer(many=True, read_only=True) #related_name=products
+    # dev_33
+    # products = ProductSerializer(many=True, read_only=True) #related_name=products
 
     class Meta:
         model = Category
