@@ -182,18 +182,22 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
-# dev_46 소셜로그인 설정
+# dev_27 소셜로그인 설정
 SOCIALACCOUNT_LOGIN_ON_GET = True
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_ON_GET = True
+
+# dev_27 로그인후 리다이렉트
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
 
 # dev_46 소셜로그인 설정
 SOCIALACCOUNT_PROVIDERS = {
     # 추가 카카오 설정
     "kakao": {
         "APP": {
-            "client_id": "",
-            "secret": "",
+            "client_id": "114f15d304d60d315b190c730e98f711",
+            "secret": "d5eNqRjUNoC90v4JehEVuHDk0eB0Y2oL",
             "key": "",
         },
         # scope의 경우 내가 어떤 데이터를 가져올건지를 선택하는 것인데 사이트마다

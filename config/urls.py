@@ -6,10 +6,11 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("store.urls")),  # dev_1
-    path("accounts/", include("accounts.urls")),  # dev_9
+    path("account/", include("accounts.urls")),  # dev_9 #dev_27
     path("cart/", include("cart.urls")),  # dev_15
     path("orders/", include("orders.urls")),  # dev_24
     path("payment/", include("payment.urls")),  # dev_26
+    path("accounts/", include("allauth.urls")),  # dev_27 소셜로그인
 ]
 
 # dev_2

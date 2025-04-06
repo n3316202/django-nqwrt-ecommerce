@@ -41,6 +41,12 @@
                                     <a class="nav-link" href="{% url 'accounts:register_user' %}">회원가입</a>
                               {% endif %}
                         </li>
+                        {% comment %} dev_27 추가 {% endcomment %}
+                        <li class="nav-item">
+                              <a class="nav-link active"
+                                 aria-current="page"
+                                 href="{% url 'accounts:kakao_login_user' %}">소셜로그인</a>
+                        </li>
                         <li class="nav-item dropdown">
                               <a class="nav-link dropdown-toggle"
                                  id="navbarDropdown"
