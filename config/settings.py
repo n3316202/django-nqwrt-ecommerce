@@ -192,8 +192,8 @@ SOCIALACCOUNT_PROVIDERS = {
     # 추가 카카오 설정
     "kakao": {
         "APP": {
-            "client_id": "114f15d304d60d315b190c730e98f711",
-            "secret": "d5eNqRjUNoC90v4JehEVuHDk0eB0Y2oL",
+            "client_id": "",
+            "secret": "",
             "key": "",
         },
         # scope의 경우 내가 어떤 데이터를 가져올건지를 선택하는 것인데 사이트마다
