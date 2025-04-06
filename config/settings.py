@@ -43,6 +43,15 @@ INSTALLED_APPS = [
     "cart",  # dev_15
     "orders",  # dev_24
     "payment",  # dev_26
+    # dev_27 소셜로그인 추가
+    "django.contrib.sites",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    # provider 추가 (추가로 다른 사이트도 하고 싶을 경우 뒤에 이름만 변경하면 됨)
+    #'allauth.socialaccount.providers.google', #구글로그인 구현시 추가
+    "allauth.socialaccount.providers.kakao",  # 카카오로그인 구현시 추가
+    #'allauth.socialaccount.providers.naver', # 네이버 로그인 구현시 추가
 ]
 
 MIDDLEWARE = [
@@ -53,6 +62,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",  # #dev_27 추가
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -156,3 +166,44 @@ AUTH_USER_MODEL = "accounts.User"
 
 # dev_15
 CART_SESSION_ID = "cart"
+
+
+# dev_27
+# 위에서 추가되어 있으므로
+# AUTH_USER_MODEL = "accounts.User"  # 추가!! 없으면 오류 발생 "앱이름.모델명" user모델생성 후 allauth말고 내가 생성한 모델을 우선으로 적용
+# dev_27
+SITE_ID = 1  # 추가
+
+# dev_27
+AUTHENTICATION_BACKENDS = [
+    # 추가 장고에서 사용자의 이름을 기준으로 로그인하도록 설정
+    "django.contrib.auth.backends.ModelBackend",
+    # 추가 'allauth'의 인증방식 추가
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+# dev_46 소셜로그인 설정
+SOCIALACCOUNT_LOGIN_ON_GET = True
+ACCOUNT_LOGOUT_REDIRECT_URL = "/"
+ACCOUNT_LOGOUT_ON_GET = True
+
+# dev_46 소셜로그인 설정
+SOCIALACCOUNT_PROVIDERS = {
+    # 추가 카카오 설정
+    "kakao": {
+        "APP": {
+            "client_id": "114f15d304d60d315b190c730e98f711",
+            "secret": "d5eNqRjUNoC90v4JehEVuHDk0eB0Y2oL",
+            "key": "",
+        },
+        # scope의 경우 내가 어떤 데이터를 가져올건지를 선택하는 것인데 사이트마다
+        # 제공하는 값이 다르기 때문에 가져올 데이터를 설정한 이후 추가/삭제 해보면 됩니다.
+        # SCOPE값에 제공하지 않는 값을 넣거나 하는 이유로 오류가 나올 수 있음
+        "SCOPE": [],
+        # 추가
+        "AUTH_PARAMS": {
+            "access_type": "online",  # 추가
+            "prompt": "select_account",  # 추가 간편로그인을 지원해줌
+        },
+    }
+}
