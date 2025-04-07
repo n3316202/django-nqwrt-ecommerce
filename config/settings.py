@@ -45,9 +45,11 @@ INSTALLED_APPS = [
     "payment",  # dev_26
     "rest_framework",  # dev_28
     "api",  # dev_28
+    "corsheaders",  # dev_36
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",  # dev_36
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -56,6 +58,12 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+# dev_36
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:8080",
+#     "http://127.0.0.1:9000",
+# ]
+CORS_ORIGIN_ALLOW_ALL = True  # 어떠한 출처든 상관없이 정보를 공유
 
 ROOT_URLCONF = "config.urls"
 
