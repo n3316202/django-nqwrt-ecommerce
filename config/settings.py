@@ -59,10 +59,10 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 # dev_36
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:8080",
-#     "http://127.0.0.1:9000",
-# ]
+# 정확히 허용할 도메인만
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # 프론트 도메인
+]
 CORS_ORIGIN_ALLOW_ALL = True  # 어떠한 출처든 상관없이 정보를 공유
 
 ROOT_URLCONF = "config.urls"
