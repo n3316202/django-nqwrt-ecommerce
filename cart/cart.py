@@ -23,6 +23,7 @@ class Cart(object):
         cart = self.session.get(settings.CART_SESSION_ID)
         if not cart:
             cart = self.session[settings.CART_SESSION_ID] = {}
+
         self.cart = cart
 
     def __len__(self):
@@ -70,6 +71,14 @@ class Cart(object):
         #     carty = str(self.cart)
         #     carty = carty.replace("'", '"')
         #     current_user.update(old_cart=str(carty))
+
+    def convert_cart_to_json(self):
+        if self.request.user.is_authenticated:
+            current_user = User.objects.filter(id=self.request.user.id)
+            # Convert {'3':1} to {"3":1}
+            carty = str(self.cart)
+            carty = carty.replace("'", '"')
+            current_user.update(old_cart=str(carty))
 
     def save(self):
         self.session[settings.CART_SESSION_ID] = self.cart
