@@ -14,7 +14,7 @@ class Cart(object):
 
     def __init__(self, request):
         self.session = request.session
-        # dev_25
+        # dev_23
         # 로그인이 되어 있다면, 로그인 유저에 대한 정보를 빼내기 위하여...
         self.request = request
 
