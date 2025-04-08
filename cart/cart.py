@@ -21,8 +21,10 @@ class Cart(object):
         print("유저========", self.request.user.username)
 
         cart = self.session.get(settings.CART_SESSION_ID)
+
         if not cart:
             cart = self.session[settings.CART_SESSION_ID] = {}
+
         self.cart = cart
 
     def __len__(self):
