@@ -17,7 +17,7 @@ from django.contrib import messages
 from store.models import Product
 
 from orders.forms import ShippingForm
-from orders.models import Order, OrderItem, ShippingAddress
+
 
 
 # dev_26
