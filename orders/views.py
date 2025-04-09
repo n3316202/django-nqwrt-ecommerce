@@ -72,7 +72,12 @@ def orders_create(request):
     else:
         # Get Current uer's shipping Info
         # dev_26_2
-        shipping_user = ShippingAddress.objects.get(id=request.user.id)
+        from django.core.exceptions import ObjectDoesNotExist
+
+        try:
+            shipping_user = ShippingAddress.objects.get(user=request.user)
+        except ObjectDoesNotExist:
+            shipping_user = None
 
         # Get User's Shipping Form
         form = ShippingForm(instance=shipping_user)

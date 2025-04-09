@@ -34,8 +34,15 @@ class OrderItem(models.Model):
 
 
 # dev_25
+# +----+--------+---------------------+
+# | id | order_id (unique) | address |
+# +----+--------+---------------------+
+# | 1  |   1    | 서울특별시 강남구    |
+# +----+--------+---------------------+
 class ShippingAddress(models.Model):
     user = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
+    # dev_26_2
+    order = models.OneToOneField(Order, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=255)
     phone = models.CharField(max_length=255)
     email = models.CharField(max_length=255)

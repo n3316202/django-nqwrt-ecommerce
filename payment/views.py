@@ -67,6 +67,7 @@ def payment_process(request):
                 shipping.user = (
                     request.user
                 )  # ForeignKey 값 추가 (현재 로그인한 사용자)
+                shipping.order = create_order
                 shipping.save()  # 최종적으로 저장
 
             # 결재 데이터 저장
