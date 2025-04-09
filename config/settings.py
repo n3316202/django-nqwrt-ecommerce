@@ -191,13 +191,17 @@ ACCOUNT_LOGOUT_ON_GET = True
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
+
+# pip install python-decouple
+from decouple import config
+
 # dev_46 소셜로그인 설정
 SOCIALACCOUNT_PROVIDERS = {
     # 추가 카카오 설정
     "kakao": {
         "APP": {
-            "client_id": "114f15d304d60d315b190c730e98f711",
-            "secret": "d5eNqRjUNoC90v4JehEVuHDk0eB0Y2oL",
+            "client_id": config("KAKAO_CLIENT_ID"),
+            "secret": config("KAKAO_SECRET"),
             "key": "",
         },
         # scope의 경우 내가 어떤 데이터를 가져올건지를 선택하는 것인데 사이트마다
