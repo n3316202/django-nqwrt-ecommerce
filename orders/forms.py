@@ -9,4 +9,4 @@ class ShippingForm(forms.ModelForm):
     class Meta:
         model = ShippingAddress
         fields = "__all__"
-        exclude = ["user"]
+        exclude = ["user", "order"]  # dev_26_2
