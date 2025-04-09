@@ -3,6 +3,8 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 
+from api.views.cart_views import CartAPIView
+
 # dev_30
 from .views import base_views, product_views, category_views
 
@@ -41,4 +43,5 @@ urlpatterns = [
     # PATCH /categories/<pk>/
     # DELETE /categories/<pk>/
     path("", include(router.urls)),
+    path("cart/", CartAPIView.as_view(), name="api_cart"),
 ]
