@@ -19,7 +19,6 @@ from store.models import Product
 from orders.forms import ShippingForm
 
 
-
 # dev_26
 # Create your views here.
 @login_required(login_url="accounts:login_user")
@@ -60,6 +59,7 @@ def payment_process(request):
                 )
                 create_order_item.save()
 
+            # 배송 관련 저장
             form = ShippingForm(request.POST)
 
             if form.is_valid():
@@ -81,7 +81,8 @@ def payment_process(request):
                 cart.remove(product)
 
             messages.success(request, "결재가 완료 되었습니다.")
-            return HttpResponse("SUCCESS")
+            # dev_26_2
+            return redirect("/")
         else:
             messages.success(request, "결재 금액이 맞지않아 취소 되었습니다.")
             return redirect("/")
