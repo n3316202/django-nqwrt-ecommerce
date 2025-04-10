@@ -65,6 +65,14 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # 프론트 도메인
 ]
 CORS_ORIGIN_ALLOW_ALL = True  # 어떠한 출처든 상관없이 정보를 공유
+# dev_38
+CORS_ALLOW_CREDENTIALS = True
+# 쿠키 관련
+SESSION_COOKIE_SECURE = False  # 로컬에서는 반드시 False (HTTPS에서만 전송 X)
+CSRF_COOKIE_SECURE = False  # 로컬에서는 False
+SESSION_COOKIE_SAMESITE = "Lax"  # 또는 "None" (같은 도메인만 허용 시 Lax)
+CSRF_COOKIE_SAMESITE = "Lax"
+
 
 ROOT_URLCONF = "config.urls"
 
@@ -190,6 +198,7 @@ CART_SESSION_ID = "cart"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",  # 추가
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
 }
@@ -213,4 +222,5 @@ DJOSER = {
         "user": "accounts.serializers.UserSerializer",
         "current_user": "accounts.serializers.UserSerializer",
     },
+    "CREATE_SESSION_ON_LOGIN": True,  # 로그인하면 세션도 생성됨
 }

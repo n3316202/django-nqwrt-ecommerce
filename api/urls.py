@@ -4,6 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from api.views.cart_views import CartAPIView
+from api.views.djoser_views import CustomTokenCreateView
 
 # dev_30
 from .views import base_views, product_views, category_views
@@ -45,6 +46,9 @@ urlpatterns = [
     path("", include(router.urls)),
     path("cart/", CartAPIView.as_view(), name="api_cart"),
     # dev_38
+    # djoser의 JWT 로그인 뷰를 오버라이드해서
+    # JWT 발급 후, Django의 login() 함수로 세션 생성
+    # 인증 설정에서 JWT + 세션 둘 다 사용
     path("auth/", include("djoser.urls")),  # 회원가입, 비밀번호 변경 등
     path("auth/", include("djoser.urls.jwt")),  # JWT 로그인/로그아웃, 토큰 갱신 등
 ]

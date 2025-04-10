@@ -90,6 +90,8 @@ class Cart(object):
         else:
             self.cart[product_id]["quantity"] += quantity
 
+        print("체크")
+        print(self.cart)
         self.save()
 
         # dev_23
