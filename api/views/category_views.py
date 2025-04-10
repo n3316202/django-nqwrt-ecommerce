@@ -107,7 +107,7 @@ from rest_framework.decorators import action
 class CategoriesAPI(ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     # POST 요청 커스터마이징
     def create(self, request, *args, **kwargs):
