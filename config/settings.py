@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "rest_framework",  # dev_28
     "api",  # dev_28
     "corsheaders",  # dev_36
+    "djoser",  # dev_38
 ]
 
 MIDDLEWARE = [
@@ -166,3 +167,50 @@ AUTH_USER_MODEL = "accounts.User"
 
 # dev_15
 CART_SESSION_ID = "cart"
+
+# dev_38
+# Simple JWT 패키지를 써서 JWT(JSON Web Token) 기반 인증을 사용하겠다고 설정
+# 세션 쿠키 기반 인증보다 더 RESTful (stateless)
+# 모바일/프론트엔드 앱과 연동이 편함 (React, Vue 등)
+# 백엔드 서버에 로그인 상태 유지할 필요 없음
+
+# https://chatgpt.com/c/67ef7abf-2fbc-8007-be16-ed6e3f036f00
+# ❗ 특징:
+# 서버는 아무것도 기억하지 않음 → Stateless
+# 인증은 토큰 안에 담긴 정보로 바로 판단함
+# 확장성 좋고, 여러 서비스(API 서버, 프론트 서버)에서도 공유하기 쉬움
+
+# 🔐 주요 엔드포인트 예시
+# 경로	설명
+# POST /auth/jwt/create/	로그인 (토큰 발급)
+# POST /auth/jwt/refresh/	액세스 토큰 갱신
+# POST /auth/jwt/verify/	토큰 유효성 확인
+# POST /auth/users/	회원가입
+# GET /auth/users/me/	현재 로그인된 사용자 조회
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+}
+
+#    'AUTH_HEADER_TYPES': ('JWT',),
+#    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+#    'REFRESH_TOKEN_LIFETIME': timedelta(days=2),
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "AUTH_HEADER_TYPES": ("Bearer",),
+}
+# http://127.0.0.1:8000/api/auth/users/me/
+DJOSER = {
+    "USER_ID_FIELD": "id",
+    "LOGIN_FIELD": "username",  # 또는 email
+    "SERIALIZERS": {
+        "user_create": "accounts.serializers.UserCreateSerializer",
+        "user": "accounts.serializers.UserSerializer",
+        "current_user": "accounts.serializers.UserSerializer",
+    },
+}
