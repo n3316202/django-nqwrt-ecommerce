@@ -1,8 +1,9 @@
+from decimal import Decimal
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from store.models import Product
-from cart.cart import Cart
+from cart.cart import Cart, CartDRF
 from api.serializers import ProductSerializer
 from rest_framework.permissions import IsAuthenticated
 
@@ -15,6 +16,8 @@ from rest_framework.permissions import IsAuthenticated
 # DELETE   /api/cart/	   상품 제거 or 전체 비우기
 # 🔁 DELETE에서 product_id를 넘기면 해당 상품만 제거, 안 넘기면 전체 비움 처리됩니다.
 
+import json
+
 
 class CartAPIView(APIView):
     # permission_classes = [IsAuthenticated]
@@ -23,28 +26,39 @@ class CartAPIView(APIView):
         """
         장바구니 목록 조회
         """
-        cart = Cart(request)
-        data = []
+        cart = json.loads(request.user.old_cart or "{}")
 
-        for item in cart:
-            serialized_item = {
-                "product": ProductSerializer(item["product"]).data,
-                "quantity": item["quantity"],
-                "price": str(item["price"]),
-                "total_price": str(item["total_price"]),
-            }
-            data.append(serialized_item)
+        cart_items = []
+        total_quantity = 0
+        total_price = Decimal("0.00")
 
-        print("테스트")
-        print(data)
+        for product_id, item in cart.items():
+            try:
+                product = Product.objects.get(id=product_id)
+            except Product.DoesNotExist:
+                continue  # 삭제된 상품은 제외
 
-        cart_total_items = len(cart)
-        cart_total_price = cart.get_product_total()
+            price = product.sale_price if product.is_sale else product.price
+            quantity = item.get("quantity", 0)
+            item_total = Decimal(price) * quantity
+
+            cart_items.append(
+                {
+                    "product": ProductSerializer(product).data,
+                    "quantity": quantity,
+                    "price": str(price),
+                    "total_price": str(item_total),
+                }
+            )
+
+            total_quantity += quantity
+            total_price += item_total
+
         return Response(
             {
-                "cart": data,
-                "cart_total_items": cart_total_items,
-                "cart_total_price": cart_total_price,
+                "cart": cart_items,
+                "cart_total_items": total_quantity,
+                "cart_total_price": str(total_price),
             }
         )
 
@@ -56,11 +70,12 @@ class CartAPIView(APIView):
         quantity = int(request.data.get("quantity", 1))
 
         print("상품", product_id, "갯수", quantity)
-        cart = Cart(request)
+        cart = CartDRF(request)
 
         try:
             product = Product.objects.get(id=product_id)
-            cart.add(product, quantity=quantity)
+            cart.add_to_old_cart(request.user, product.id, quantity)
+            # cart.add(product, quantity=quantity)
             return Response({"message": "상품이 장바구니에 추가되었습니다."})
         except Product.DoesNotExist:
             return Response({"error": "상품이 존재하지 않습니다."}, status=404)

@@ -134,3 +134,41 @@ class Cart(object):
     def get_dic_cart(self):
         dic_cart = self.cart
         return dic_cart
+
+
+import json
+from decimal import Decimal
+
+
+# dev_38
+class CartDRF:
+    def __init__(self, request):
+        self.request = request
+
+    # ✅ 복호화된 세션 데이터: {'cart': {'1': {'quantity': 1, 'price': '24000.00'}}}
+    def add_to_old_cart(self, user, product_id, price, quantity=1):
+        """
+        사용자의 old_cart에 상품을 추가합니다.
+        product_id: str or int
+        price: Decimal 또는 str
+        quantity: int
+        """
+        # 기존 cart 불러오기 (없으면 빈 dict)
+        old_cart = user.old_cart or "{}"
+        cart = json.loads(old_cart)
+
+        product_id = str(product_id)
+        price = str(price)  # 문자열로 변환해서 저장
+
+        # 이미 상품이 있으면 수량 증가
+        if product_id in cart:
+            cart[product_id]["quantity"] += quantity
+        else:
+            cart[product_id] = {
+                "quantity": quantity,
+                "price": price,
+            }
+
+        # 다시 JSON 문자열로 저장
+        user.old_cart = json.dumps(cart)
+        user.save()
