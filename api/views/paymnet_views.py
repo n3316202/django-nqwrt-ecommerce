@@ -49,14 +49,14 @@ class PaymentViewSet(viewsets.ModelViewSet):
             )
 
         # ✅ 3. 배송지 정보 저장 (폼 방식 그대로 살릴 경우)
-        form = ShippingForm(request.data)
-        if form.is_valid():
-            shipping = form.save(commit=False)
-            shipping.user = user
-            shipping.order = order
-            shipping.save()
-        else:
-            return Response({"error": "배송지 정보가 올바르지 않습니다."}, status=400)
+        # form = ShippingForm(request.data)
+        # if form.is_valid():
+        #     shipping = form.save(commit=False)
+        #     shipping.user = user
+        #     shipping.order = order
+        #     shipping.save()
+        # else:
+        #     return Response({"error": "배송지 정보가 올바르지 않습니다."}, status=400)
 
         # ✅ 4. 결제 정보 저장
         payment = Payment.objects.create(

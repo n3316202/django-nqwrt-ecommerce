@@ -19,6 +19,20 @@ app_name = "api"
 router = routers.DefaultRouter()
 router.register(r"categories", category_views.CategoryViewSet)
 
+from rest_framework.routers import DefaultRouter
+from api.views.paymnet_views import PaymentViewSet
+
+# dev_39
+# GET /api/payments/ – 전체 결제 내역
+# POST /api/payments/ – 결제 내역 생성
+# GET /api/payments/<id>/ – 단일 결제 조회
+# PUT/PATCH /api/payments/<id>/ – 수정
+# DELETE /api/payments/<id>/ – 삭제
+
+router = DefaultRouter()
+router.register(r"payments", PaymentViewSet)
+
+
 # dev_30
 urlpatterns = [
     # base_views.py
