@@ -3,6 +3,7 @@ from itertools import product
 from django.db import transaction
 from rest_framework import serializers
 
+from payment.models import Payment
 from store.models import Category, Product
 
 
@@ -64,3 +65,11 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = "__all__"
+
+
+# dev_39
+class PaymentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Payment
+        fields = "__all__"  # 필요한 필드만 지정해도 됨
