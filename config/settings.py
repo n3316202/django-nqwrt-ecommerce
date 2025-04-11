@@ -195,7 +195,7 @@ LOGOUT_REDIRECT_URL = "/"
 # pip install python-decouple
 from decouple import config
 
-# dev_46 소셜로그인 설정
+# dev_27 소셜로그인 설정
 SOCIALACCOUNT_PROVIDERS = {
     # 추가 카카오 설정
     "kakao": {
