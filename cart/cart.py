@@ -145,7 +145,7 @@ class CartDRF:
     def __init__(self, request):
         self.request = request
 
-    # ✅ 복호화된 세션 데이터: {'cart': {'1': {'quantity': 1, 'price': '24000.00'}}}
+    # ✅ old_cart 데이터 {"34": {"quantity": 1, "price": "10000.00"}, "33": {"quantity": 1, "price": "12000.00"}}
     def add_to_old_cart(self, user, product_id, price, quantity=1):
         """
         사용자의 old_cart에 상품을 추가합니다.
@@ -183,3 +183,9 @@ class CartDRF:
             del cart[product_id]
             user.old_cart = json.dumps(cart)
             user.save()
+
+
+    def cart_total_price(self, user):
+        old_cart = user.old_cart or "{}"
+        cart = json.loads(old_cart)  # JSON 문자열을 딕셔너리로 변환
+        return sum(int(item["quantity"]) * float(item["price"]) for item in cart.values())

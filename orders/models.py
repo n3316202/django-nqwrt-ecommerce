@@ -36,6 +36,7 @@ class OrderItem(models.Model):
 # dev_25
 class ShippingAddress(models.Model):
     user = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
+    order = models.OneToOneField(Order, on_delete=models.CASCADE)  # dev_39
     full_name = models.CharField(max_length=255)
     phone = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
