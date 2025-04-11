@@ -172,3 +172,14 @@ class CartDRF:
         # 다시 JSON 문자열로 저장
         user.old_cart = json.dumps(cart)
         user.save()
+
+    # ✅ 상품 전체 삭제 메서드
+    def remove_from_old_cart(self, user, product_id):
+        old_cart = user.old_cart or "{}"
+        cart = json.loads(old_cart)
+
+        product_id = str(product_id)
+        if product_id in cart:
+            del cart[product_id]
+            user.old_cart = json.dumps(cart)
+            user.save()

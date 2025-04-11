@@ -220,6 +220,8 @@ class CategoryViewSet(ModelViewSet):
     # 1. get_queryset() 커스터마이징 (권한별 필터링)
     def get_queryset(self):
         user = self.request.user
-        if user.is_staff:
-            return Category.objects.filter(id=1)
+
+        # if user.is_staff:
+        #    return Category.objects.filter(id=1)
+
         return Category.objects.all()

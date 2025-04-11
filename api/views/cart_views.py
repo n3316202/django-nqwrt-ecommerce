@@ -74,7 +74,9 @@ class CartAPIView(APIView):
 
         try:
             product = Product.objects.get(id=product_id)
-            cart.add_to_old_cart(request.user, product.id, quantity)
+            print("갯수5", quantity)
+            price = product.sale_price if product.is_sale else product.price
+            cart.add_to_old_cart(request.user, product.id, price, quantity)
             # cart.add(product, quantity=quantity)
             return Response({"message": "상품이 장바구니에 추가되었습니다."})
         except Product.DoesNotExist:
@@ -98,19 +100,24 @@ class CartAPIView(APIView):
 
     def delete(self, request):
         """
-        장바구니에서 상품 제거 또는 전체 삭제
+        old_cart에서 상품 제거 또는 전체 삭제
         """
         product_id = request.data.get("product_id")
+        user = request.user
+        cart = CartDRF(request)
 
-        cart = Cart(request)
-
+        # 특정 상품 삭제
         if product_id:
             try:
+                # 실제 존재하는 상품인지 확인
                 product = Product.objects.get(id=product_id)
-                cart.remove(product)
+                cart.remove_from_old_cart(user, product_id)
                 return Response({"message": "상품이 장바구니에서 제거되었습니다."})
             except Product.DoesNotExist:
                 return Response({"error": "상품이 존재하지 않습니다."}, status=404)
+
+        # 전체 비우기
         else:
-            cart.clear()
+            user.old_cart = "{}"
+            user.save()
             return Response({"message": "장바구니가 비워졌습니다."})
