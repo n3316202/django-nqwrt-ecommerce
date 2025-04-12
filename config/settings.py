@@ -47,6 +47,24 @@ INSTALLED_APPS = [
     "api",  # dev_28
     "corsheaders",  # dev_36
     "djoser",  # dev_38
+    # dev_40
+    # allauth
+    "django.contrib.sites",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.kakao",
+    # rest framework + dj-rest-auth
+    #'rest_framework', 위에 있으므로
+    "rest_framework.authtoken",
+    "dj_rest_auth",
+    "dj_rest_auth.registration",
+    # JWT (선택적으로 cookies 지원)
+    "rest_framework_simplejwt.token_blacklist",
+    "social_django",  # 추가
+    # "djangorestframework_simplejwt",  # 추가
+    # simple-jwt 추가해주기
+    "rest_framework_simplejwt",
 ]
 
 MIDDLEWARE = [
@@ -58,6 +76,9 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # dev_40 추가된 미들웨어
+    "allauth.account.middleware.AccountMiddleware",  # 이 줄을 추가해야 합니다.
+    "social_django.middleware.SocialAuthExceptionMiddleware",  # 소셜 미들웨어
 ]
 # dev_36
 # 정확히 허용할 도메인만
@@ -200,6 +221,8 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.SessionAuthentication",  # 추가
         "rest_framework_simplejwt.authentication.JWTAuthentication",
+        # dev_40
+        # "dj_rest_auth.jwt_auth.JWTCookieAuthentication",  # 또는 아래 줄 사용
     ),
 }
 
@@ -224,3 +247,81 @@ DJOSER = {
     },
     "CREATE_SESSION_ON_LOGIN": True,  # 로그인하면 세션도 생성됨
 }
+
+# dev_40
+SITE_ID = 1
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",  # 기본 인증
+    "allauth.account.auth_backends.AuthenticationBackend",  # allauth
+]
+
+# dj-rest-auth + JWT 설정
+# 2.2.5버전
+
+REST_USE_JWT = True  # JWT 사용
+
+# 3.0.0버전 이상
+REST_AUTH = {
+    "USE_JWT": True,
+    "JWT_AUTH_HTTPONLY": False,
+}
+
+# JWT 옵션 (SIMPLE_JWT) 추가:
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=3),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": True,
+}
+
+# 카카오 소셜 로그인 때문은 아니고, 기본 로그인 방식(이메일 or 사용자명 등)에만 적용되는 설정
+#'username' → 사용자명이 필요
+#'email' → 이메일만으로 로그인 (아이디 없이)
+#'username_email' → 둘 다 가능
+# ACCOUNT_AUTHENTICATION_METHOD = "username"  # ✅ 사용자명으로 로그인
+# ACCOUNT_USERNAME_REQUIRED = True  # 사용자명 필수
+# ACCOUNT_EMAIL_REQUIRED = True  # 이메일도 받게 (소셜용 등)
+# ACCOUNT_USER_MODEL_USERNAME_FIELD = "username"
+
+# 로그인 방식: 이메일로 로그인
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_USERNAME_REQUIRED = False  # username 필요 없음
+ACCOUNT_EMAIL_REQUIRED = True  # 이메일 필수
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None  # username을 필드로 안 씀
+
+# 이메일 인증 건너뛰기 (선택)
+ACCOUNT_EMAIL_VERIFICATION = "none"  # 개발 중에는 'none' 추천
+ACCOUNT_LOGOUT_ON_GET = True
+SOCIALACCOUNT_LOGIN_ON_GET = True
+
+# 로그인/로그아웃 리다이렉트 (optional)
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+
+from decouple import config  # or os.environ
+
+SOCIALACCOUNT_PROVIDERS = {
+    "kakao": {
+        "APP": {
+            "client_id": config("KAKAO_CLIENT_ID"),  # REST API 키
+            "secret": config("KAKAO_SECRET"),  # Client Secret (선택)
+            "key": "",  # 비워둬도 됨
+        },
+        "SCOPE": [
+            "account_email",
+            "profile",
+            "gender",
+        ],  # 카카오 gender 정보 제공을 위해 scope 설정 필요:
+        "AUTH_PARAMS": {
+            "access_type": "online",
+            "prompt": "select_account",
+        },
+    }
+}
+
+SOCIALACCOUNT_ADAPTER = "accounts.adapters.KakaoSocialAccountAdapter"
+
+CORS_ALLOW_ALL_ORIGINS = True  # 개발 중이라면 허용
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]

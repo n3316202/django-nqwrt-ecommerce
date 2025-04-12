@@ -32,7 +32,7 @@ from rest_framework.decorators import action
 # # dev_31
 # class CategoriesAPI(APIView):
 #     def get(self, request):
-#         categories = Category.objects.all()
+#         categories = .objects.all()
 #         serializer = CategorySerializer(categories, many=True)
 #         return Response(serializer.data)
 

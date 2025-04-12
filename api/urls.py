@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 
 from api.views.cart_views import CartAPIView
 from api.views.djoser_views import CustomTokenCreateView
+from api.views.social_views import KakaoLoginView
 
 # dev_30
 from .views import base_views, product_views, category_views
@@ -65,4 +66,8 @@ urlpatterns = [
     # 인증 설정에서 JWT + 세션 둘 다 사용
     path("auth/", include("djoser.urls")),  # 회원가입, 비밀번호 변경 등
     path("auth/", include("djoser.urls.jwt")),  # JWT 로그인/로그아웃, 토큰 갱신 등
+    # dev_40
+    path("dj-rest-auth/", include("dj_rest_auth.urls")),
+    path("dj-rest-auth/registration/", include("dj_rest_auth.registration.urls")),
+    path("dj-rest-auth/kakao/", KakaoLoginView.as_view(), name="kakao_login"),
 ]

@@ -28,3 +28,8 @@ class User(AbstractUser):
     )
     # dev_23
     old_cart = models.CharField(max_length=200, blank=True, null=True)
+
+    # dev_40
+    profile_image = models.URLField(blank=True, null=True)
+    # 카카오 ID 필드 추가
+    kakao_id = models.CharField(max_length=255, unique=True, blank=True, null=True)
