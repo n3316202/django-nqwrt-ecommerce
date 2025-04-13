@@ -286,10 +286,10 @@ SIMPLE_JWT = {
 # ACCOUNT_USER_MODEL_USERNAME_FIELD = "username"
 
 # 로그인 방식: 이메일로 로그인
-ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 ACCOUNT_USERNAME_REQUIRED = False  # username 필요 없음
 ACCOUNT_EMAIL_REQUIRED = True  # 이메일 필수
-ACCOUNT_USER_MODEL_USERNAME_FIELD = None  # username을 필드로 안 씀
+ACCOUNT_USER_MODEL_USERNAME_FIELD = "username"  # username을 필드로 안 씀
 
 # 이메일 인증 건너뛰기 (선택)
 ACCOUNT_EMAIL_VERIFICATION = "none"  # 개발 중에는 'none' 추천

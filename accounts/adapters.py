@@ -59,13 +59,16 @@ class KakaoSocialAccountAdapter(DefaultSocialAccountAdapter):
         if not user.job:
             user.job = "E"  # 기타
 
-        if not user.password:
-            user.set_password(user.email)
+        #if not user.password:
+        #    user.set_password(user.email)
 
-        # if not user.username:
-        #    user.username(user.email)
+        # print("패스워드" + user.password)
+
+        if not user.username:
+            user.username = user.email
+
+        sociallogin.save(request)
 
         # user.save()
-        sociallogin.save(request)
 
         return user
