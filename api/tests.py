@@ -13,7 +13,6 @@ import jwt
 class ApiTest(TestCase):
     def test_jwt_decode_access_token(self):
         access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ0MjgxODY5LCJpYXQiOjE3NDQyODAwNjksImp0aSI6ImNmZWQ2OWVkNzRhOTRiODlhMjNjYWQxNTU4MWEzMDNmIiwidXNlcl9pZCI6MX0.1X7T5UbLrRxAutk8SdvZbV0a7vUiBX2SAT03QReBTKY"
-
         refresh_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc0NDg4NDg2OSwiaWF0IjoxNzQ0MjgwMDY5LCJqdGkiOiIwMWZkZjRmYWFkOGM0YTE3YmQ5ZjAzOGFlYjA1MmQ1YiIsInVzZXJfaWQiOjF9.Gj-oFC0ZdSdKyqqYWXPEFGweXoTwlW7aC-fC4zjdrKA"
 
         print("\n▶ ACCESS TOKEN 디코딩 결과:")
