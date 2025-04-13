@@ -62,7 +62,10 @@ class KakaoSocialAccountAdapter(DefaultSocialAccountAdapter):
         if not user.password:
             user.set_password(user.email)
 
-        #user.save()
+        # if not user.username:
+        #    user.username(user.email)
+
+        # user.save()
         sociallogin.save(request)
-        
+
         return user
