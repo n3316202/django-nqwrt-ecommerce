@@ -16,6 +16,8 @@ def products_api(request):
 
     if request.method == "GET":
         products = Product.objects.all()
+        # many=True ➜ 여러 개의 인스턴스 (QuerySet, 리스트 등)
+        # many=False (기본값) ➜ 단일 인스턴스
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
 
