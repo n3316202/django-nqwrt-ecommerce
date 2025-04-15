@@ -14,9 +14,20 @@ from store.models import Category, Product
 # nested serialization
 
 
+# 중첩구조 만들기
+# dev_32
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ["id", "name"]
+
+
 # def_29
 # serializers.py 생성
+# dev_32
+# ✅ 2. ProductSerializer에서 Category를 중첩시키기
 class ProductSerializer(serializers.ModelSerializer):
+    category = CategorySerializer(read_only=True)  # 중첩으로 출력
     class Meta:
         model = Product
         fields = "__all__"  # fields = [ "id", "name", "price", "category", "is_sale","sale_price"]
@@ -72,3 +83,5 @@ class ProductSerializer(serializers.ModelSerializer):
 #     image = serializers.ImageField()
 #     is_sale = serializers.BooleanField()
 #     sale_price = serializers.IntegerField()
+
+

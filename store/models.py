@@ -17,7 +17,9 @@ class Product(models.Model):
     image = models.ImageField(
         upload_to="upload/product", blank=True, null=True
     )  # dev_30
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, related_name="products"
+    )  # dev_32
     # dev_6
     is_sale = models.BooleanField(default=False)
     sale_price = models.IntegerField(default=0, blank=True, null=True)
