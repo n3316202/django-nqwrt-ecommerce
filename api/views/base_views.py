@@ -22,5 +22,10 @@ def hello_world(request):
 def hello_world_drf(request):
     return Response({"message": "Hello World!"})
 
+@api_view(["GET"])
+def core_serializer_drf(request):
+    
+    return Response({"message": "Hello World!"})
+
 
 
