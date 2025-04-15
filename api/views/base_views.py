@@ -25,7 +25,11 @@ def hello_world_drf(request):
 @api_view(["GET"])
 def core_serializer_drf(request):
     
-    return Response({"message": "Hello World!"})
+    products = Product.objects.all()
+    data = serializers.serialize("json", products)
+    print(data)
+    
+    return 
 
 
 
