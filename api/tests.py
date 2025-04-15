@@ -59,3 +59,76 @@ from django.core import serializers
 #         products = Product.objects.all()
 #         data = serializers.serialize("json", products)
 #         print(data)
+
+from django.test import TestCase
+from api.serializers import ProductSerializer
+from store.models import Category, Product
+
+
+class ProductSerializerTest(TestCase):
+    def setUp(self):
+        self.category = Category.objects.create(name="Electronics")
+
+    def test_valid_product_data(self):
+        data = {
+            "name": "TV",
+            "price": 999.99,
+            "description": "A large smart TV.",
+            "category": self.category.id,
+            "is_sale": True,
+            "sale_price": 500,
+        }
+        serializer = ProductSerializer(data=data)
+        self.assertTrue(serializer.is_valid())
+        self.assertEqual(serializer.validated_data["name"], "TV")
+
+    def test_price_too_high(self):
+        data = {
+            "name": "TV",
+            "price": 1500,
+            "description": "Too expensive",
+            "category": self.category.id,
+            "is_sale": False,
+            "sale_price": 0,
+        }
+        serializer = ProductSerializer(data=data)
+        self.assertFalse(serializer.is_valid())
+        self.assertIn("price", serializer.errors)
+
+    def test_name_too_short(self):
+        data = {
+            "name": "TV",  # Too short (<3)
+            "price": 500,
+            "description": "Short name",
+            "category": self.category.id,
+            "is_sale": False,
+            "sale_price": 0,
+        }
+        serializer = ProductSerializer(data=data)
+        self.assertFalse(serializer.is_valid())
+        self.assertIn("name", serializer.errors)
+
+    def test_sale_price_required_when_on_sale(self):
+        data = {
+            "name": "Laptop",
+            "price": 800,
+            "description": "On sale but no sale_price",
+            "category": self.category.id,
+            "is_sale": True,
+            "sale_price": 0,  # Invalid
+        }
+        serializer = ProductSerializer(data=data)
+        self.assertFalse(serializer.is_valid())
+        self.assertIn("non_field_errors", serializer.errors)
+
+    def test_sale_price_optional_when_not_on_sale(self):
+        data = {
+            "name": "Laptop",
+            "price": 800,
+            "description": "Not on sale",
+            "category": self.category.id,
+            "is_sale": False,
+            "sale_price": 0,
+        }
+        serializer = ProductSerializer(data=data)
+        self.assertTrue(serializer.is_valid())
