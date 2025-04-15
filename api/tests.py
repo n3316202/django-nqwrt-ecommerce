@@ -27,6 +27,11 @@ class AnyTest(TestCase):
         print(dic_calculator[url](3, 2))
 
 
+from django.test import TestCase
+from store.models import Product, Category
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core import serializers
+
 # class SerializerTest(TestCase):
 
 #     def setUp(self):

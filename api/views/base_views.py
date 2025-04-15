@@ -7,6 +7,12 @@ from rest_framework import status
 from store.models import Product
 from api.serializers import ProductSerializer
 
+from django.test import TestCase
+from store.models import Product, Category
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core import serializers
+from django.http import JsonResponse
+
 # Create your views here.
 
 
@@ -22,14 +28,10 @@ def hello_world(request):
 def hello_world_drf(request):
     return Response({"message": "Hello World!"})
 
-@api_view(["GET"])
+
+# DRF Serializer를 쓰는 게 훨씬 유연하고 강력
+# Django 내장 기능이고, 단순히 QuerySet을 JSON, XML 등 문자열로 직렬화하고 싶을 때 사용합니다.
 def core_serializer_drf(request):
-    
     products = Product.objects.all()
-    data = serializers.serialize("json", products)
-    print(data)
-    
-    return 
-
-
-
+    data = serializers.serialize("json", products)  # JSON 문자열로 직렬화
+    return JsonResponse(data, safe=False)  # safe=False로 리스트 반환 허용
