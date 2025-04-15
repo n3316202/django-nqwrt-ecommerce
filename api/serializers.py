@@ -14,6 +14,12 @@ from store.models import Category, Product
 # nested serialization
 
 
+# ✅ 주의할 점
+# depth는 읽기 전용 출력만 가능해요.
+# POST, PUT 요청에서 중첩된 객체를 직접 생성하거나 수정할 수는 없어요.
+# 만약 쓰기도 원한다면 category_id 같은 별도 필드와 create() 오버라이드가 여전히 필요해요.
+
+
 # 중첩구조 만들기
 # dev_32
 class CategorySerializer(serializers.ModelSerializer):
@@ -28,9 +34,36 @@ class CategorySerializer(serializers.ModelSerializer):
 # ✅ 2. ProductSerializer에서 Category를 중첩시키기
 class ProductSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)  # 중첩으로 출력
+
+    category_id = serializers.PrimaryKeyRelatedField(
+        queryset=Category.objects.all(), write_only=True
+    )
+
     class Meta:
         model = Product
-        fields = "__all__"  # fields = [ "id", "name", "price", "category", "is_sale","sale_price"]
+        # fields = "__all__"  # fields = [ "id", "name", "price", "category", "is_sale","sale_price"]
+        fields = [
+            "id",
+            "name",
+            "price",
+            "description",
+            "image",
+            "is_sale",
+            "sale_price",
+            "category",  # 출력용 (중첩)
+            "category_id",  # 입력용 (ID)
+        ]
+
+    def create(self, validated_data):
+        # category_id로 받은 객체 꺼내서 처리
+        # ✅ pop() 함수 기본 설명
+        # my_dict = {"name": "Tom", "age": 25}
+        # age = my_dict.pop("age")
+        # print(age)         # 출력: 25
+        # print(my_dict)     # 출력: {'name': 'Tom'}
+        category = validated_data.pop("category_id")
+        product = Product.objects.create(**validated_data, category=category)
+        return product
 
     # dev_31
     # 가격은 0 이상 1000 이하
@@ -83,5 +116,3 @@ class ProductSerializer(serializers.ModelSerializer):
 #     image = serializers.ImageField()
 #     is_sale = serializers.BooleanField()
 #     sale_price = serializers.IntegerField()
-
-
