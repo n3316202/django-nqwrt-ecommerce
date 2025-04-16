@@ -33,21 +33,24 @@ class CategorySerializer(serializers.ModelSerializer):
 # dev_32
 # ✅ 2. ProductSerializer에서 Category를 중첩시키기
 class ProductSerializer(serializers.ModelSerializer):
-    category = CategorySerializer()  # 중첩으로 출력 #read_only=True
+    # category = CategorySerializer()  # 중첩으로 출력 #read_only=True
+    # dev_32_2
+    category = CategorySerializer(read_only=True)
 
     class Meta:
         model = Product
         fields = "__all__"  # fields = [ "id", "name", "price", "category", "is_sale","sale_price"]
 
-    def create(self, validated_data):
-        print("카테고리", validated_data)
-        category_data = validated_data.pop("category")
+    # dev_32_2
+    # def create(self, validated_data):
+    #     print("카테고리", validated_data)
+    #     category_data = validated_data.pop("category")
 
-        category, _ = Category.objects.get_or_create(
-            **category_data
-        )  # 카테고리 저장/조회
-        product = Product.objects.create(**validated_data, category=category)
-        return product
+    #     category, _ = Category.objects.get_or_create(
+    #         **category_data
+    #     )  # 카테고리 저장/조회
+    #     product = Product.objects.create(**validated_data, category=category)
+    #     return product
 
     # def update(self, instance, validated_data):
     #     category_data = validated_data.pop("category", None)
