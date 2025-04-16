@@ -1,6 +1,3 @@
-from importlib.resources import read_binary
-from itertools import product
-from django.db import transaction
 from rest_framework import serializers
 
 from store.models import Category, Product
@@ -58,7 +55,7 @@ class ProductSerializer(serializers.ModelSerializer):
 # CategorySerializer에서 일대다 관계 보이게 하기
 # 역방향 참조
 class CategorySerializer(serializers.ModelSerializer):
-    products = ProductSerializer(many=True, read_only=True) #related_name=products
+    products = ProductSerializer(many=True, read_only=True)  # related_name=products
 
     class Meta:
         model = Category
