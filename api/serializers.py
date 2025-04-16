@@ -33,26 +33,26 @@ class CategorySerializer(serializers.ModelSerializer):
 # dev_32
 # ✅ 2. ProductSerializer에서 Category를 중첩시키기
 class ProductSerializer(serializers.ModelSerializer):
-    category = CategorySerializer(read_only=True)  # 중첩으로 출력
+    category = CategorySerializer()  # 중첩으로 출력 #read_only=True
 
-    category_id = serializers.PrimaryKeyRelatedField(
-        queryset=Category.objects.all(), write_only=True
-    )
+    # category_id = serializers.PrimaryKeyRelatedField(
+    #     queryset=Category.objects.all(), write_only=True
+    # )
 
     class Meta:
         model = Product
-        # fields = "__all__"  # fields = [ "id", "name", "price", "category", "is_sale","sale_price"]
-        fields = [
-            "id",
-            "name",
-            "price",
-            "description",
-            "image",
-            "is_sale",
-            "sale_price",
-            "category",  # 출력용 (중첩)
-            "category_id",  # 입력용 (ID)
-        ]
+        fields = "__all__"  # fields = [ "id", "name", "price", "category", "is_sale","sale_price"]
+        # fields = [
+        #     "id",
+        #     "name",
+        #     "price",
+        #     "description",
+        #     "image",
+        #     "is_sale",
+        #     "sale_price",
+        #     "category",  # 출력용 (중첩)
+        #     # "category_id",  # 입력용 (ID)
+        # ]
 
     def create(self, validated_data):
         # category_id로 받은 객체 꺼내서 처리
@@ -61,9 +61,29 @@ class ProductSerializer(serializers.ModelSerializer):
         # age = my_dict.pop("age")
         # print(age)         # 출력: 25
         # print(my_dict)     # 출력: {'name': 'Tom'}
-        category = validated_data.pop("category_id")
+        # category = validated_data.pop("category_id")
+        # product = Product.objects.create(**validated_data, category=category)
+        # return product
+        print("카테고리", validated_data)
+        category_data = validated_data.pop("category")
+
+        category, _ = Category.objects.get_or_create(
+            **category_data
+        )  # 카테고리 저장/조회
         product = Product.objects.create(**validated_data, category=category)
         return product
+
+    # def update(self, instance, validated_data):
+    #     category_data = validated_data.pop("category", None)
+    #     if category_data:
+    #         category, _ = Category.objects.get_or_create(**category_data)
+    #         instance.category = category
+
+    #     for attr, value in validated_data.items():
+    #         setattr(instance, attr, value)
+
+    #     instance.save()
+    #     return instance
 
     # dev_31
     # 가격은 0 이상 1000 이하
