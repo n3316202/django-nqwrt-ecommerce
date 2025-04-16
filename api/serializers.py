@@ -67,6 +67,8 @@ class ProductSerializer(serializers.ModelSerializer):
         print("카테고리", validated_data)
         category_data = validated_data.pop("category")
 
+        # category	조회되었거나 새로 생성된 Category 인스턴스
+        # created	True면 새로 생성된 것이고, False면 기존에 있던 것
         category, _ = Category.objects.get_or_create(
             **category_data
         )  # 카테고리 저장/조회
