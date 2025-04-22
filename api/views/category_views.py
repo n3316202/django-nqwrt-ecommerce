@@ -107,7 +107,7 @@ from rest_framework.decorators import action
 class CategoriesAPI(ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     # POST 요청 커스터마이징
     def create(self, request, *args, **kwargs):
@@ -188,9 +188,9 @@ class CategoryAPI(RetrieveUpdateDestroyAPIView):
 
 # 커스터마이징     포인트	메서드
 # 쿼리셋 필터링	        get_queryset()
-# 시리얼라이저 변경	     get_serializer_class()
-# 생성 로직 수정	        perform_create() or create()
-# 삭제 제어	            perform_destroy()
+# 시리얼라이저 변경	    get_serializer_class()
+# 생성 로직 수정	    perform_create() or create()
+# 삭제 제어	           perform_destroy()
 # 커스텀 URL 추가	    @action(detail=True)
 
 
